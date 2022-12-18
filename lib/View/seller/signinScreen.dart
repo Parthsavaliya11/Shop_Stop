@@ -1,4 +1,4 @@
-import 'package:fierbase/View/signUp.dart';
+import 'package:fierbase/View/seller/signUp.dart';
 import 'package:fierbase/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 
-import '../Controller/signController.dart';
+import '../../Controller/signController.dart';
 
 class signIn extends StatefulWidget {
   const signIn({Key? key}) : super(key: key);
@@ -101,16 +101,8 @@ class _signInState extends State<signIn> {
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.black),
-                            onPressed: () async {
-                              String msg = await getsign.signIn(
-                                  getsign.txt_mailIn.text,
-                                  getsign.txt_passwordIn.text);
-                              await Get.snackbar("${"ShopStop"}", "${msg}");
-                              if (msg == "Login success") {
-                                Get.offAllNamed('homeScreen');
-                                getsign.txt_mailIn.clear();
-                                getsign.txt_passwordIn.clear();
-                              }
+                            onPressed: ()  {
+
                             },
                             child: Text("Log in"),
                           ),
@@ -153,7 +145,7 @@ class _signInState extends State<signIn> {
                         Get.offAllNamed('homeScreen');
                       }
                     },
-                  )
+                  ),
                 ],
               ),
             ),

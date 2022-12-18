@@ -1,8 +1,8 @@
-import 'package:fierbase/View/signinScreen.dart';
+import 'package:fierbase/View/seller/signinScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../main.dart';
+import '../../main.dart';
 
 class Signup extends StatefulWidget {
   const Signup({Key? key}) : super(key: key);

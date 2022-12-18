@@ -1,14 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fierbase/Firebase/Messaging/messageing.dart';
-import 'package:fierbase/View/addproductpage.dart';
+import 'package:fierbase/View/seller/addproductpage.dart';
 import 'package:fierbase/firestore/fierStonehelper.dart';
 import 'package:fierbase/firestore/firestore%20controller.dart';
 import 'package:fierbase/main.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
-import 'package:cool_alert/cool_alert.dart';
 
 class homeScreen extends StatefulWidget {
   const homeScreen({Key? key}) : super(key: key);
@@ -53,7 +50,7 @@ class _homeScreenState extends State<homeScreen> {
                 onTap: () {
                   getsign.logout();
                   getsign.googlelogout();
-                  Get.offAllNamed('loginscreen');
+                  Get.offAllNamed('seller');
                 },
                 child: ListTile(
                   title: Text("Logout"),
@@ -78,59 +75,57 @@ class _homeScreenState extends State<homeScreen> {
           ),
           backgroundColor: Colors.lightGreenAccent,
         ),
-        body: Obx(
-          () => StreamBuilder(
-            stream: userwiseread(),
-            builder: (BuildContext context, snapshot) {
-              if (snapshot.hasError) {
-                Text("${snapshot.error}");
-              } else if (snapshot.hasData) {
-                getstore.allfinal.clear();
+        body: StreamBuilder(
+          stream: userwiseread(),
+          builder: (BuildContext context, snapshot) {
+            if (snapshot.hasError) {
+              Text("${snapshot.error}");
+            } else if (snapshot.hasData) {
+              getstore.allfinal.clear();
 
-                var storedata = snapshot.data!.docs;
+              var storedata = snapshot.data!.docs;
 
-                for (var z in storedata) {
-                  Map finaldata = z.data() as Map<String, dynamic>;
+              for (var z in storedata) {
+                Map finaldata = z.data() as Map<String, dynamic>;
 
-                  getstore.proname.value = finaldata['productname'];
-                  getstore.proprice.value = finaldata['productprice'];
-                  getstore.prodisp.value = finaldata['description'];
-                  fstoremodel f = fstoremodel(
-                    productname: getstore.proname.value,
-                    productprice: getstore.proprice.value,
-                    productdes: getstore.prodisp.value,
-                  );
-                  getstore.allfinal.value.add(f);
-                }
-                print("${"${getstore.allfinal.length}"}");
-                return getstore.allfinal.length == 0
-                    ? Center(child: Text("Launch Your First Product....."))
-                    : ListView.builder(
-                        itemCount: getstore.allfinal.length,
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              updatefirestore("pn", "feg", "fadgse",
-                                  getstore.alldocs[index].id);
-                            },
-                            child: ListTile(
-                              title: Text(
-                                  "${getstore.allfinal[index].productname}"),
-                            ),
-                          );
-                        });
+                getstore.proname.value = finaldata['productname'];
+                getstore.proprice.value = finaldata['productprice'];
+                getstore.prodisp.value = finaldata['description'];
+                fstoremodel f = fstoremodel(
+                  productname: getstore.proname.value,
+                  productprice: getstore.proprice.value,
+                  productdes: getstore.prodisp.value,
+                );
+                getstore.allfinal.value.add(f);
               }
-              return const Center(
-                child: SizedBox(
-                  height: 35,
-                  width: 35,
-                  child: CircularProgressIndicator(
-                    color: Colors.black,
-                  ),
+              print("${"${getstore.allfinal.length}"}");
+              return getstore.allfinal.length == 0
+                  ? Center(child: Text("Launch Your First Product....."))
+                  : ListView.builder(
+                      itemCount: getstore.allfinal.length,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            updatefirestore("pn", "feg", "fadgse",
+                                getstore.alldocs[index].id);
+                          },
+                          child: ListTile(
+                            title:
+                                Text("${getstore.allfinal[index].productname}"),
+                          ),
+                        );
+                      });
+            }
+            return const Center(
+              child: SizedBox(
+                height: 35,
+                width: 35,
+                child: CircularProgressIndicator(
+                  color: Colors.black,
                 ),
-              );
-            },
-          ),
+              ),
+            );
+          },
         ),
       ),
     );

@@ -1,12 +1,14 @@
 import 'package:fierbase/Controller/local_notification.dart';
 import 'package:fierbase/Controller/signController.dart';
-import 'package:fierbase/View/addproductpage.dart';
-import 'package:fierbase/View/homeScreen.dart';
-import 'package:fierbase/View/signUp.dart';
-import 'package:fierbase/View/signinScreen.dart';
+import 'package:fierbase/View/seller/addproductpage.dart';
+import 'package:fierbase/View/seller/homeScreen.dart';
+import 'package:fierbase/View/introScreen.dart';
+import 'package:fierbase/View/seller/sellerLogin.dart';
+import 'package:fierbase/View/seller/signUp.dart';
+import 'package:fierbase/View/seller/signinScreen.dart';
 import 'package:fierbase/View/spelshScreen.dart';
-import 'package:fierbase/View/testLogin.dart';
-import 'package:fierbase/View/testsignup.dart';
+import 'package:fierbase/View/seller/testLogin.dart';
+import 'package:fierbase/View/seller/testsignup.dart';
 import 'package:fierbase/firestore/firestore%20controller.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +29,7 @@ void main() async {
       Sizer(
         builder: (context, orientation, devicetype) => GetMaterialApp(
           debugShowCheckedModeBanner: false,
+          initialRoute: 'addpro',
           routes: {
             '/': (context) => spelshScreen(),
             'homeScreen': (context) => homeScreen(),
@@ -35,6 +38,8 @@ void main() async {
             'addpro': (context) => addproduct(),
             'testlogin': (context) => loginscreen(),
             'testsignup': (context) => signupscreen(),
+            'intro' : (context) => interoScreen(),
+            'seller' : (context) => Seller(),
           },
         ),
       ),

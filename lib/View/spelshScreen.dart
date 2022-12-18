@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:easy_splash_screen/easy_splash_screen.dart';
-import 'package:fierbase/View/homeScreen.dart';
-import 'package:fierbase/View/signinScreen.dart';
+import 'package:fierbase/View/seller/homeScreen.dart';
+import 'package:fierbase/View/seller/signinScreen.dart';
 import 'package:fierbase/main.dart';
 import 'package:fierbase/model/Signindetailmodel;.dart';
 
@@ -36,7 +36,7 @@ class _spelshScreenState extends State<spelshScreen> {
         backgroundColor: Colors.lightGreenAccent,
         body: Center(
           child: Column(
-
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Align(
                 alignment: Alignment.center,
@@ -65,6 +65,6 @@ class _spelshScreenState extends State<spelshScreen> {
   void checkuserton() async {
     check == true
         ? await Get.offNamed('homeScreen')
-        : await Get.offNamed('testlogin');
+        : await Get.offNamed('intro');
   }
 }

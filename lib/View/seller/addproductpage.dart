@@ -36,14 +36,11 @@ class _addproductState extends State<addproduct> {
           elevation: 0,
         ),
         body: SingleChildScrollView(
-          physics: MediaQuery
-              .of(context)
-              .viewInsets
-              .bottom == 0.0
+          physics: MediaQuery.of(context).viewInsets.bottom == 0.0
               ? ScrollPhysics()
               : BouncingScrollPhysics(
-            parent: AlwaysScrollableScrollPhysics(),
-          ),
+                  parent: AlwaysScrollableScrollPhysics(),
+                ),
           child: Form(
             key: getstore.k,
             child: Stack(
@@ -77,13 +74,14 @@ class _addproductState extends State<addproduct> {
                           data: Theme.of(context)
                               .copyWith(splashColor: Colors.transparent),
                           child: TextFormField(
+                            keyboardType: TextInputType.name,
                             validator: (value) =>
-                            value!.isEmpty ? 'Enter Product Name' : null,
+                                value!.isEmpty ? 'Enter Product Name' : null,
                             controller: getstore.pronamee,
                             maxLength: 30,
                             autofocus: false,
                             style:
-                            TextStyle(fontSize: 20.0, color: Colors.black),
+                                TextStyle(fontSize: 20.0, color: Colors.black),
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white,
@@ -108,13 +106,14 @@ class _addproductState extends State<addproduct> {
                           data: Theme.of(context)
                               .copyWith(splashColor: Colors.transparent),
                           child: TextFormField(
+                            keyboardType: TextInputType.number,
                             validator: (value) =>
-                            value!.isEmpty ? 'Enter Product Price' : null,
+                                value!.isEmpty ? 'Enter Product Price' : null,
                             controller: getstore.propricee,
                             maxLength: 30,
                             autofocus: false,
                             style:
-                            TextStyle(fontSize: 20.0, color: Colors.black),
+                                TextStyle(fontSize: 20.0, color: Colors.black),
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white,
@@ -139,15 +138,14 @@ class _addproductState extends State<addproduct> {
                           data: Theme.of(context)
                               .copyWith(splashColor: Colors.transparent),
                           child: TextFormField(
-                            validator: (value) =>
-                            value!.isEmpty
+                            validator: (value) => value!.isEmpty
                                 ? 'Enter Product Description'
                                 : null,
                             controller: getstore.prodescription,
                             maxLength: 100,
                             autofocus: false,
                             style:
-                            TextStyle(fontSize: 20.0, color: Colors.black),
+                                TextStyle(fontSize: 20.0, color: Colors.black),
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white,
@@ -181,7 +179,8 @@ class _addproductState extends State<addproduct> {
                                   getstore.prodescription.text,
                                   "${getsign.userid.obs}");
                               getlocal.showbuttonmethod();
-                              Get.snackbar("${"ShopStop"}", "Your Product Lauch Successfully");
+                              Get.snackbar("${"ShopStop"}",
+                                  "Your Product Lauch Successfully");
                               Get.offAllNamed('homeScreen');
                               getstore.pronamee.clear();
                               getstore.propricee.clear();
