@@ -12,6 +12,9 @@ class signController extends GetxController {
   TextEditingController txt_mailIn = TextEditingController();
   TextEditingController txt_passwordIn = TextEditingController();
   RxString useremail = "".obs,userid = "".obs;
+  String? msg;
+  bool? animation;
+  bool password = true;
 
 
   Future<String> signUp(String e1, String p1) async {
@@ -83,5 +86,9 @@ class signController extends GetxController {
     User? user = FirebaseAuth.instance.currentUser;
     useremail.value = await user!.email!;
     userid.value = await user.uid;
+  }
+  void passwordicon(bool p)
+  {
+    password = !p;
   }
 }

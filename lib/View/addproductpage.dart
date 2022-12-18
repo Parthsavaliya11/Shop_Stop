@@ -180,8 +180,8 @@ class _addproductState extends State<addproduct> {
                                   getstore.propricee.text,
                                   getstore.prodescription.text,
                                   "${getsign.userid.obs}");
-
                               getlocal.showbuttonmethod();
+                              Get.snackbar("${"ShopStop"}", "Your Product Lauch Successfully");
                               Get.offAllNamed('homeScreen');
                               getstore.pronamee.clear();
                               getstore.propricee.clear();

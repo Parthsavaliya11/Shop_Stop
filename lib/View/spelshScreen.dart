@@ -18,14 +18,14 @@ class spelshScreen extends StatefulWidget {
 }
 
 class _spelshScreenState extends State<spelshScreen> {
-  bool check = true;
+  bool? check;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    check = getsign.checkuser();
     getlocal.init();
+    check = getsign.checkuser();
   }
 
   @override
@@ -34,29 +34,37 @@ class _spelshScreenState extends State<spelshScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.lightGreenAccent,
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Center(child: Image.asset("assets/images/shopstop.png")),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: JumpingDotsProgressIndicator(
-                numberOfDots: 5,
-                milliseconds: 100,
-                fontSize: 80.0,
+        body: Center(
+          child: Column(
+
+            children: [
+              Align(
+                alignment: Alignment.center,
+                child: Center(
+                  child: SizedBox(
+                    height: 250,
+                    child: Image.asset("assets/images/shopstop.png"),
+                  ),
+                ),
               ),
-            ),
-          ],
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: JumpingDotsProgressIndicator(
+                  numberOfDots: 5,
+                  milliseconds: 100,
+                  fontSize: 70.0,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
- void checkuserton() async {
+  void checkuserton() async {
     check == true
-        ? await Get.offAll(homeScreen(), transition: Transition.upToDown)
-        : await Get.offAll(signIn(), transition: Transition.upToDown);
-
-
+        ? await Get.offNamed('homeScreen')
+        : await Get.offNamed('testlogin');
   }
 }

@@ -10,8 +10,11 @@ class firestoreget extends GetxController {
   TextEditingController uprodescription = TextEditingController();
   final k = GlobalKey<FormState>();
   var alldocs;
-  List<fstoremodel> allfinal = [];
-  String? proname, proprice, prodisp, prodocid;
+  RxList<fstoremodel> allfinal = <fstoremodel>[].obs;
+  RxString proname = "".obs,
+      proprice = "".obs,
+      prodisp = "".obs,
+      prodocid = "".obs;
 }
 
 class fstoremodel {
@@ -19,5 +22,4 @@ class fstoremodel {
 
   fstoremodel(
       {this.productname, this.productprice, this.productdes, this.prodocid});
-
 }
