@@ -1,14 +1,12 @@
 import 'dart:async';
 
-import 'package:easy_splash_screen/easy_splash_screen.dart';
-import 'package:fierbase/View/seller/homeScreen.dart';
-import 'package:fierbase/View/seller/signinScreen.dart';
 import 'package:fierbase/main.dart';
-import 'package:fierbase/model/Signindetailmodel;.dart';
+
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:progress_indicators/progress_indicators.dart';
+import 'package:sizer/sizer.dart';
 
 class spelshScreen extends StatefulWidget {
   const spelshScreen({Key? key}) : super(key: key);
@@ -18,7 +16,7 @@ class spelshScreen extends StatefulWidget {
 }
 
 class _spelshScreenState extends State<spelshScreen> {
-  bool? check;
+  bool check = true;
 
   @override
   void initState() {
@@ -30,34 +28,29 @@ class _spelshScreenState extends State<spelshScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Timer(Duration(seconds: 4), () => checkuserton());
+     Timer(Duration(seconds: 4), () => checkuserton());
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.lightGreenAccent,
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Align(
-                alignment: Alignment.center,
-                child: Center(
-                  child: SizedBox(
-                    height: 250,
-                    child: Image.asset("assets/images/shopstop.png"),
-                  ),
-                ),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: JumpingDotsProgressIndicator(
-                  numberOfDots: 5,
-                  milliseconds: 100,
-                  fontSize: 70.0,
-                ),
-              ),
-            ],
+        backgroundColor: Colors.blueAccent,
+        body: Stack(children: [
+          Center(
+            child: SizedBox(
+              height: 30.h,
+              child: Image.asset("assets/images/shopstopwhite.png"),
+            ),
           ),
-        ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: JumpingDotsProgressIndicator(
+              color: Colors.white,
+              numberOfDots: 5,
+              milliseconds: 100,
+              fontSize: 35.sp,
+            ),
+          ),
+
+
+        ]),
       ),
     );
   }

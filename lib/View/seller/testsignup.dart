@@ -1,5 +1,4 @@
-import 'package:fierbase/View/seller/homeScreen.dart';
-import 'package:fierbase/View/seller/signinScreen.dart';
+
 import 'package:fierbase/View/seller/testLogin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';

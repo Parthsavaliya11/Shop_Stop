@@ -170,17 +170,20 @@ class _SellerState extends State<Seller> {
                     ),
                   ],
                 ),
-                SignInButton(
-                  Buttons.google,
-                  text: "Sign up with Google",
-                  onPressed: () async {
-                    bool msg = await getsign.signWithgoogle();
-                    if (msg == false) {
-                      Get.snackbar("Shop Stop", "Invalid Entry");
-                    } else {
-                      Get.offAllNamed('homeScreen');
-                    }
-                  },
+                Padding(
+                  padding:  EdgeInsets.all(2.5.h),
+                  child: SignInButton(
+                    Buttons.google,
+                    text: "Sign up with Google",
+                    onPressed: () async {
+                      bool msg = await getsign.signWithgoogle();
+                      if (msg == false) {
+                        Get.snackbar("Shop Stop", "Invalid Entry");
+                      } else {
+                        Get.offAllNamed('homeScreen');
+                      }
+                    },
+                  ),
                 ),
               ],
             ),

@@ -9,7 +9,7 @@ import 'package:sizer/sizer.dart';
 import '../../main.dart';
 
 class loginscreen extends StatefulWidget {
-  const loginscreen({Key? key}) : super(key: key);
+  const   loginscreen({Key? key}) : super(key: key);
 
   @override
   State<loginscreen> createState() => _loginscreenState();
@@ -33,7 +33,7 @@ class _loginscreenState extends State<loginscreen> {
                 Center(
                   child: SizedBox(
                     height: 280,
-                    child: Image.asset("assets/images/signinimg.png"),
+                    child: Image.asset("assets/images/shopstop.png"),
                   ),
                 ),
                 SizedBox(
