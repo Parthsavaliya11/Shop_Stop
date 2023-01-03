@@ -37,8 +37,14 @@ void userwiefirestore(String productName, String productPrice, String dis,
     "userid": "$uid",
     "imageurl": "$picurl",
     "category": "$procategory",
-
   });
+  void userprofile(String username, String profillink, String uid) {
+    FirebaseFirestore.instance
+        .collection("user")
+        .doc("$uid")
+        .collection("profiledetail")
+        .add({"username": username, "userprofilelink": profillink});
+  }
 // }void userwiefirestore(String productName, String productPrice, String dis,
 //     String uid, String picurl, String procategory) {
 //   FirebaseFirestore.instance
@@ -54,16 +60,13 @@ void userwiefirestore(String productName, String productPrice, String dis,
 //     "category": "$procategory"
 //   });
 // }
-
 }
 
-
-  void updatefirestore(String pn, String pp, String pd, String user) {
-    CollectionReference users = FirebaseFirestore.instance.collection(
-        'Product');
-    users.doc("$user").update(
-        {"productname": "$pn", "productprice": "$pp", "description": "$pd"});
-  }
+void updatefirestore(String pn, String pp, String pd, String user) {
+  CollectionReference users = FirebaseFirestore.instance.collection('Product');
+  users.doc("$user").update(
+      {"productname": "$pn", "productprice": "$pp", "description": "$pd"});
+}
 
 Stream<QuerySnapshot<Map<String, dynamic>>> readfirestore() {
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;

@@ -9,6 +9,8 @@ class firestoreget extends GetxController {
   TextEditingController upropricee = TextEditingController();
   TextEditingController uprodescription = TextEditingController();
   final k = GlobalKey<FormState>();
+  final loginkey = GlobalKey<FormState>();
+  final signupsky = GlobalKey<FormState>();
   var alldocs;
   RxList<fstoremodel> allfinal = <fstoremodel>[].obs;
   RxString proname = "".obs,

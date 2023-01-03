@@ -1,15 +1,20 @@
 import 'package:fierbase/View/seller/homeScreen.dart';
 import 'package:fierbase/View/seller/testsignup.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../main.dart';
+import '../componets/buttons.dart';
+import '../componets/txtfields.dart';
 
 class loginscreen extends StatefulWidget {
-  const   loginscreen({Key? key}) : super(key: key);
+  const loginscreen({Key? key}) : super(key: key);
 
   @override
   State<loginscreen> createState() => _loginscreenState();
@@ -17,178 +22,129 @@ class loginscreen extends StatefulWidget {
 
 class _loginscreenState extends State<loginscreen> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          physics:
-              BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-          child: Padding(
-            padding: EdgeInsets.only(top: 4.h, bottom: 6.h),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Center(
-                  child: SizedBox(
-                    height: 280,
-                    child: Image.asset("assets/images/shopstop.png"),
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  "Login Now",
-                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 35),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  "Please Enter The Detail Below To Continue.",
-                  style: TextStyle(fontSize: 14, color: Colors.grey),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 15, left: 15),
-                  child: Theme(
-                    data: Theme.of(context)
-                        .copyWith(splashColor: Colors.transparent),
-                    child: TextFormField(
-                      keyboardType: TextInputType.emailAddress,
-                      validator: (value) =>
-                          value!.isEmpty ? 'Enter Product Price' : null,
-                      autofocus: false,
-                      style: TextStyle(fontSize: 20.0, color: Colors.black),
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.grey.shade100,
-                        hintText: 'Enter Email',
-                        hintStyle: TextStyle(fontSize: 18),
-                        contentPadding: const EdgeInsets.only(
-                            left: 25.0, bottom: 5.0, top: 5.0),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                          borderRadius: BorderRadius.circular(14),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 15, left: 15),
-                  child: Theme(
-                    data: Theme.of(context)
-                        .copyWith(splashColor: Colors.transparent),
-                    child: TextFormField(
-                      keyboardType: TextInputType.visiblePassword,
-                      validator: (value) =>
-                          value!.isEmpty ? 'Enter Password' : null,
-                      autofocus: false,
-                      style: TextStyle(fontSize: 20.0, color: Colors.black),
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.grey.shade100,
-                        hintText: 'Enter Password',
-                        hintStyle: TextStyle(fontSize: 18),
-                        contentPadding: const EdgeInsets.only(
-                            left: 25.0, bottom: 5.0, top: 5.0),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                          borderRadius: BorderRadius.circular(14),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 25,
-                ),
-                Row(
+        backgroundColor: Colors.grey.shade100,
+        body: Form(
+          key: getstore.loginkey,
+          child: Container(
+            height: 100.h,
+            width: 100.w,
+            child: SingleChildScrollView(
+              physics: MediaQuery.of(context).viewInsets.bottom == 0
+                  ? NeverScrollableScrollPhysics()
+                  : BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics()),
+              child: Padding(
+                padding: EdgeInsets.only(top: 4.h, bottom: 6.h),
+                child: Column(
                   children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(15),
-                        child: Container(
-                          height: 60,
-                          width: double.infinity,
-                          child: ElevatedButton(
+                    Center(
+                      child: SizedBox(
+                        height: 30.h,
+                        child: Image.asset("assets/images/shopstopblue.png"),
+                      ),
+                    ),
+                    txtfield("Invalid", "Enter The Email", Icons.person,
+                        getsign.txt_mailIn),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    txtfield("Invalid", "Enter The Password", Icons.lock,
+                        getsign.txt_passwordIn),
+                    SizedBox(
+                      height: 7.h,
+                    ),
+                    loginbtn(),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    Divider(
+                        color: Colors.grey,
+                        thickness: 0.8,
+                        endIndent: 10.w,
+                        indent: 10.w),
+                    Padding(
+                      padding: EdgeInsets.only(top: 3.h),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          CupertinoButton(
+                            onPressed: () {},
+                            child: SizedBox(
+                              height: 4.h,
+                              child: Image.asset("assets/images/facebook.png"),
+                            ),
+                          ),
+                          CupertinoButton(
                             onPressed: () async {
-                              String msg = await getsign.signIn(
-                                  getsign.txt_mailIn.text,
-                                  getsign.txt_passwordIn.text);
-                              await Get.snackbar("${"ShopStop"}", "${msg}");
-                              if (msg == "Login success") {
+                              bool msg = await getsign.signWithgoogle();
+                              if (msg == false) {
+                                Get.snackbar("Shop Stop", "Invalid Entry");
+                              } else {
                                 Get.offAllNamed('homeScreen');
-                                getsign.txt_mailIn.clear();
-                                getsign.txt_passwordIn.clear();
                               }
                             },
-                            child: Text(
-                              "LOGIN",
-                              style:
-                                  TextStyle(fontSize: 18, color: Colors.black),
+                            child: SizedBox(
+                              height: 4.h,
+                              child: Image.asset("assets/images/google.png"),
                             ),
-                            style: ElevatedButton.styleFrom(
-                                shape: StadiumBorder(),
-                                backgroundColor: Colors.lightGreenAccent),
                           ),
-                        ),
+                          CupertinoButton(
+                            onPressed: () {},
+                            child: SizedBox(
+                              height: 4.h,
+                              child: Image.asset("assets/images/apple.png"),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Don't have an account?",
-                      style:
-                          TextStyle(fontSize: 14, color: Colors.grey.shade500),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Get.offAll(signupscreen(),
-                            transition: Transition.cupertino);
-                      },
-                      child: Text(
-                        "Register",
-                        style: TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                  ],
-                ),
-                SignInButton(
-                  Buttons.google,
-                  text: "Sign up with Google",
-                  onPressed: () async {
-                    bool msg = await getsign.signWithgoogle();
-                    if (msg == false) {
-                      Get.snackbar("Shop Stop", "Invalid Entry");
-                    } else {
-                      Get.offAllNamed('homeScreen');
-                    }
-                  },
-                ),
-              ],
+              ),
             ),
           ),
+        ),
+        bottomNavigationBar: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            RichText(
+              softWrap: true,
+              maxLines: 2,
+              textHeightBehavior:
+                  TextHeightBehavior(applyHeightToFirstAscent: true),
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                style: TextStyle(color: Colors.black, fontSize: 36),
+                children: [
+                  TextSpan(
+                      text: '${"Dont't Have An Account"} ',
+                      style: GoogleFonts.poppins(
+                          fontSize: 10.sp,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.w400)),
+                ],
+              ),
+            ),
+            TextButton(
+              child: Text('${"Signup"} ',
+                  style: GoogleFonts.poppins(
+                      fontSize: 12.sp,
+                      color: Colors.blueAccent,
+                      fontWeight: FontWeight.w600)),
+              onPressed: () {
+                Get.offAll(signupscreen(), transition: Transition.leftToRight);
+              },
+            ),
+          ],
         ),
       ),
     );

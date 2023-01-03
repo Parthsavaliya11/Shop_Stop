@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:fierbase/Controller/spleshController.dart';
 import 'package:fierbase/View/seller/testLogin.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,7 @@ class _interoScreenState extends State<interoScreen> {
     precacheImage(AssetImage("assets/images/f1.jpg"), context);
     precacheImage(AssetImage("assets/images/f2.jpg"), context);
     precacheImage(AssetImage("assets/images/f3.jpg"), context);
+    spleashController.spleash.introcontroller.write("intro", true);
   }
 
   @override
@@ -134,6 +136,10 @@ class _interoScreenState extends State<interoScreen> {
                                 if (IntroController
                                         .introcontrol.pagecount.value ==
                                     2) {
+                                  spleashController.spleash.introcontroller.write("key", "true");
+
+
+
                                   Get.offAll(loginscreen(),
                                       transition: Transition.leftToRight);
                                 }

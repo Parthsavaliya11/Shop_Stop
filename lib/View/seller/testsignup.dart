@@ -1,14 +1,16 @@
-
 import 'package:fierbase/View/seller/testLogin.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-
-import 'package:sign_in_button/sign_in_button.dart';import 'package:sizer/sizer.dart';
+import 'package:sign_in_button/sign_in_button.dart';
+import 'package:sizer/sizer.dart';
 
 import '../../main.dart';
-
+import '../componets/buttons.dart';
+import '../componets/txtfields.dart';
 
 class signupscreen extends StatefulWidget {
   const signupscreen({Key? key}) : super(key: key);
@@ -22,160 +24,118 @@ class _signupscreenState extends State<signupscreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          physics:
-          BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-          child: Padding(
-            padding:  EdgeInsets.only(top : 4.h,bottom: 6.h),
-            child: Column(
-              children: [
-                Center(
-                  child: SizedBox(
-                    height: 280,
-                    child: Image.asset("assets/images/signup.png"),
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  "Register Now",
-                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 35),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  "Please Enter The Detail Below To Continue.",
-                  style: TextStyle(fontSize: 14, color: Colors.grey),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 15, left: 15),
-                  child: Theme(
-                    data: Theme.of(context)
-                        .copyWith(splashColor: Colors.transparent),
-                    child: TextFormField(
-                      keyboardType: TextInputType.emailAddress,
-
-                      validator: (value) =>
-                      value!.isEmpty ? 'Enter Product Price' : null,
-                      autofocus: false,
-                      style: TextStyle(fontSize: 20.0, color: Colors.black),
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.grey.shade100,
-                        hintText: 'Enter Email',
-                        hintStyle: TextStyle(fontSize: 18),
-                        contentPadding: const EdgeInsets.only(
-                            left: 25.0, bottom: 5.0, top: 5.0),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                          borderRadius: BorderRadius.circular(14),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                Padding(
-
-                  padding: const EdgeInsets.only(right: 15, left: 15),
-                  child: Theme(
-                    data: Theme.of(context)
-                        .copyWith(splashColor: Colors.transparent),
-                    child: TextFormField(
-                      keyboardType: TextInputType.visiblePassword,
-                      validator: (value) =>
-                      value!.isEmpty ? 'Enter Password' : null,
-                      autofocus: false,
-                      style: TextStyle(fontSize: 20.0, color: Colors.black),
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.grey.shade100,
-                        hintText: 'Enter Password',
-                        hintStyle: TextStyle(fontSize: 18),
-                        contentPadding: const EdgeInsets.only(
-                            left: 25.0, bottom: 5.0, top: 5.0),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                          borderRadius: BorderRadius.circular(14),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 25,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: Container(
-                    height: 60,
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () async{
-
-                      },
-                      child: Text(
-                        "REGISTER",
-                        style: TextStyle(fontSize: 18, color: Colors.black),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                          shape: StadiumBorder(),
-                          backgroundColor: Colors.lightGreenAccent),
-                    ),
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+        backgroundColor: Colors.grey.shade100,
+        body: Form(
+          key: getstore.signupsky,
+          child: Container(
+            height: 100.h,
+            width: 100.w,
+            child: SingleChildScrollView(
+              physics: MediaQuery.of(context).viewInsets.bottom == 0
+                  ? NeverScrollableScrollPhysics()
+                  : BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics()),
+              child: Padding(
+                padding: EdgeInsets.only(top: 4.h, bottom: 6.h),
+                child: Column(
                   children: [
-                    Text(
-                      "Already have an account?",
-                      style: TextStyle(fontSize: 14, color: Colors.grey.shade500),
+                    Center(
+                      child: SizedBox(
+                        height: 30.h,
+                        child: Image.asset("assets/images/shopstopblue.png"),
+                      ),
                     ),
-                    TextButton(
-                      onPressed: ()  {
-                        Get.offAll(loginscreen(),
-                            transition: Transition.cupertino);
-                      },
-                      child: Text(
-                        "Login",
-                        style: TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.w600),
+                    txtfield("Invalid", "Enter The Email", Icons.person,getsign.txt_mailUp),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    txtfield("Invalid", "Enter The Password", Icons.lock,getsign.txt_passwordUp),
+                    SizedBox(
+                      height: 7.h,
+                    ),
+                    signupbtn(),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    Divider(
+                        color: Colors.grey,
+                        thickness: 0.8,
+                        endIndent: 10.w,
+                        indent: 10.w),
+                    Padding(
+                      padding: EdgeInsets.only(top: 3.h),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          CupertinoButton(
+                            onPressed: () {},
+                            child: SizedBox(
+                              height: 4.h,
+                              child: Image.asset("assets/images/facebook.png"),
+                            ),
+                          ),
+                          CupertinoButton(
+                            onPressed: () async {
+                              bool msg = await getsign.signWithgoogle();
+                              if (msg == false) {
+                                Get.snackbar("Shop Stop", "Invalid Entry");
+                              } else {
+                                Get.offAllNamed('homeScreen');
+                              }
+                            },
+                            child: SizedBox(
+                              height: 4.h,
+                              child: Image.asset("assets/images/google.png"),
+                            ),
+                          ),
+                          CupertinoButton(
+                            onPressed: () {},
+                            child: SizedBox(
+                              height: 4.h,
+                              child: Image.asset("assets/images/apple.png"),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
-                SignInButton(
-                  Buttons.google,
-                  text: "Sign up with Google",
-                  onPressed: () async {
-                    bool msg = await getsign.signWithgoogle();
-                    if (msg == false) {
-                      Get.snackbar("Shop Stop", "Invalid Entry");
-                    } else {
-                      Get.offAllNamed('homeScreen');
-                    }
-                  },
-                ),
-
-              ],
+              ),
             ),
           ),
+        ),
+        bottomNavigationBar: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            RichText(
+              softWrap: true,
+              maxLines: 2,
+              textHeightBehavior:
+                  TextHeightBehavior(applyHeightToFirstAscent: true),
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                style: TextStyle(color: Colors.black, fontSize: 36),
+                children: [
+                  TextSpan(
+                      text: '${"Dont't Have An Account"} ',
+                      style: GoogleFonts.poppins(
+                          fontSize: 10.sp,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.w400)),
+                ],
+              ),
+            ),
+            TextButton(
+              child: Text('${"SignIn"} ',
+                  style: GoogleFonts.poppins(
+                      fontSize: 12.sp,
+                      color: Colors.blueAccent,
+                      fontWeight: FontWeight.w600)),
+              onPressed: () {
+               Get.offAll(loginscreen(),transition: Transition.rightToLeft);
+              },
+            ),
+          ],
         ),
       ),
     );

@@ -54,7 +54,7 @@ class _homeScreenState extends State<homeScreen> {
                 onTap: () {
                   getsign.logout();
                   getsign.googlelogout();
-                  Get.offAllNamed('seller');
+                  Get.offAllNamed('login');
                 },
                 child: ListTile(
                   title: Text("Logout"),
@@ -103,8 +103,6 @@ class _homeScreenState extends State<homeScreen> {
                   Text("${snapshot.error}");
                 } else if (snapshot.hasData) {
                   getstore.allfinal.clear();
-
-
 
                   // for (var z in storedata) {
                   //   Map finaldata = z.data() as Map<String, dynamic>;

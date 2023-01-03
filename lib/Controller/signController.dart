@@ -11,7 +11,7 @@ class signController extends GetxController {
   TextEditingController txt_passwordUp = TextEditingController();
   TextEditingController txt_mailIn = TextEditingController();
   TextEditingController txt_passwordIn = TextEditingController();
-  RxString useremail = "".obs,userid = "".obs;
+  RxString useremail = "".obs,userid = "".obs,userprofile = "".obs;
   String? msg;
   bool? animation;
   bool password = true;
@@ -86,6 +86,9 @@ class signController extends GetxController {
     User? user = FirebaseAuth.instance.currentUser;
     useremail.value = await user!.email!;
     userid.value = await user.uid;
+    userprofile.value = await user.photoURL!;
+
+
   }
   void passwordicon(bool p)
   {
