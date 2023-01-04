@@ -13,10 +13,12 @@ class firestoreget extends GetxController {
   final signupsky = GlobalKey<FormState>();
   var alldocs;
   RxList<fstoremodel> allfinal = <fstoremodel>[].obs;
+
   RxString proname = "".obs,
       proprice = "".obs,
       prodisp = "".obs,
       prodocid = "".obs;
+
 }
 
 class fstoremodel {

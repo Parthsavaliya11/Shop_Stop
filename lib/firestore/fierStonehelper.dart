@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
+// create userprofile
 void createfirestore(
   String productName,
   String productPrice,
@@ -24,6 +25,7 @@ void createfirestore(
       );
 }
 
+// User Wise Data Store
 void userwiefirestore(String productName, String productPrice, String dis,
     String uid, String picurl, String procategory) {
   FirebaseFirestore.instance
@@ -38,28 +40,29 @@ void userwiefirestore(String productName, String productPrice, String dis,
     "imageurl": "$picurl",
     "category": "$procategory",
   });
-  void userprofile(String username, String profillink, String uid) {
-    FirebaseFirestore.instance
-        .collection("user")
-        .doc("$uid")
-        .collection("profiledetail")
-        .add({"username": username, "userprofilelink": profillink});
-  }
-// }void userwiefirestore(String productName, String productPrice, String dis,
-//     String uid, String picurl, String procategory) {
-//   FirebaseFirestore.instance
-//       .collection("Product")
-//       .doc("${uid}")
-//       .collection("data")
-//       .add({
-//     "productname": "$productName",
-//     "productprice": "$productPrice",
-//     "description": "$dis",
-//     "userid": "$uid",
-//     "imageurl": "$picurl",
-//     "category": "$procategory"
-//   });
-// }
+}
+
+// User Profile Details
+
+void userprofileStorage(
+    String username, String profillink, String uid, String mobile) {
+  FirebaseFirestore.instance
+      .collection("user")
+      .doc("$uid")
+      .collection("profiledetail")
+      .add({
+    "username": username,
+    "userprofilelink": profillink,
+    "mobile": "$mobile"
+  });
+}
+
+Stream<QuerySnapshot<Map<String, dynamic>>> readuserprofile() {
+  return FirebaseFirestore.instance
+      .collection("user")
+      .doc("${FirebaseAuth.instance.currentUser!.uid}")
+      .collection("profiledetail")
+      .snapshots();
 }
 
 void updatefirestore(String pn, String pp, String pd, String user) {

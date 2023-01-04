@@ -1,11 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fierbase/Controller/addproductcontroller.dart';
 import 'package:fierbase/Controller/searchcontroller.dart';
+import 'package:fierbase/Controller/userprofile.dart';
 import 'package:fierbase/Firebase/Messaging/messageing.dart';
+import 'package:fierbase/Storage/storage.dart';
 import 'package:fierbase/View/seller/addproductpage.dart';
 import 'package:fierbase/firestore/fierStonehelper.dart';
 import 'package:fierbase/firestore/firestore%20controller.dart';
 import 'package:fierbase/main.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -64,7 +67,32 @@ class _homeScreenState extends State<homeScreen> {
                   ),
                 ),
               ),
-              Obx(() => Text("${getsign.userid}")),
+              StreamBuilder(
+                  stream: readuserprofile(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Text("${snapshot.error}");
+                    } else if (snapshot.hasData) {
+                      Profilecontroller.cont.alluserdetail.clear();
+                      var userdata = snapshot.data!;
+
+                      for (var z in userdata.docs) {
+                        Map datadocs =
+                            z.data() as Map<String, dynamic>;
+                        String mobile = datadocs['mobile'];
+                        String name = datadocs['username'];
+                        String picurl = datadocs['userprofilelink'];
+                        UserprofileData u = UserprofileData(
+                            username: name,
+                            mobile: mobile,
+                            userprofilelink: picurl);
+                        Profilecontroller.cont.alluserdetail.value.add(u);
+                      }
+                      return Text(
+                          "${Profilecontroller.cont.alluserdetail.length}");
+                    }
+                    return CircularProgressIndicator();
+                  })
             ],
           ),
         ),
@@ -103,22 +131,23 @@ class _homeScreenState extends State<homeScreen> {
                   Text("${snapshot.error}");
                 } else if (snapshot.hasData) {
                   getstore.allfinal.clear();
+                  var storedata = snapshot.data!;
 
-                  // for (var z in storedata) {
-                  //   Map finaldata = z.data() as Map<String, dynamic>;
-                  //
-                  //   String proname = finaldata['productname'];
-                  //   String proprice = finaldata['productprice'];
-                  //   String prodisc = finaldata['description'];
-                  //   String imglink = finaldata['imageurl'];
-                  //   fstoremodel f = fstoremodel(
-                  //     productname: proname,
-                  //     productprice: proprice,
-                  //     productdes: prodisc,
-                  //     prodocimg: imglink,
-                  //   );
-                  //   getstore.allfinal.value.add(f);
-                  // }
+                  for (var z in storedata.docs) {
+                    Map finaldata = z.data() as Map<String, dynamic>;
+
+                    String proname = finaldata['productname'];
+                    String proprice = finaldata['productprice'];
+                    String prodisc = finaldata['description'];
+                    String imglink = finaldata['imageurl'];
+                    fstoremodel f = fstoremodel(
+                      productname: proname,
+                      productprice: proprice,
+                      productdes: prodisc,
+                      prodocimg: imglink,
+                    );
+                    getstore.allfinal.value.add(f);
+                  }
                   return getstore.allfinal.length == 0
                       ? Expanded(
                           child: Center(
@@ -133,7 +162,8 @@ class _homeScreenState extends State<homeScreen> {
                             child: StaggeredGrid.count(
                                 crossAxisCount: 2,
                                 children: getstore.allfinal
-                                    .map((index) => Padding(
+                                    .map(
+                                      (index) => Padding(
                                         padding: EdgeInsets.all(1.h),
                                         child: Container(
                                           height: 35.h,
@@ -194,7 +224,9 @@ class _homeScreenState extends State<homeScreen> {
                                               ],
                                             ),
                                           ),
-                                        )))
+                                        ),
+                                      ),
+                                    )
                                     .toList()),
                           ),
                         );

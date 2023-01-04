@@ -28,7 +28,6 @@ void main() async {
       Sizer(
         builder: (context, orientation, devicetype) => GetMaterialApp(
           debugShowCheckedModeBanner: false,
-          initialRoute: 'uprofile',
           routes: {
             '/': (context) => spelshScreen(),
             'homeScreen': (context) => homeScreen(),

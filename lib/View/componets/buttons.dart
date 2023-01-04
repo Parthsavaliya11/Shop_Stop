@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../Controller/userprofile.dart';
 import '../../main.dart';
 
 Widget bigbtn({String? buttonname}) {
@@ -55,10 +56,11 @@ Widget signupbtn() {
           style: GoogleFonts.poppins(),
         ),
         onPressed: () async {
-          String msg = await getsign.signUp(getsign.txt_mailUp.text, getsign.txt_passwordUp.text);
-          await Get.snackbar("${"ShopStop"}", "${msg}");
+          String msg = await getsign.signUp(
+              getsign.txt_mailUp.text, getsign.txt_passwordUp.text);
+
           if (msg == "Registerd success") {
-            Get.offAll(loginscreen(),transition: Transition.topLevel);
+            await Get.offNamed('uprofile');
             getsign.txt_mailIn.clear();
             getsign.txt_passwordIn.clear();
           }

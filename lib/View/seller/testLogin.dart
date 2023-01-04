@@ -9,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../Controller/userprofile.dart';
 import '../../main.dart';
 import '../componets/buttons.dart';
 import '../componets/txtfields.dart';
@@ -89,7 +90,9 @@ class _loginscreenState extends State<loginscreen> {
                               if (msg == false) {
                                 Get.snackbar("Shop Stop", "Invalid Entry");
                               } else {
-                                Get.offAllNamed('homeScreen');
+                                var key = Profilecontroller.cont.userformcount
+                                    .read("formvount");
+                                await Get.offAllNamed('homeScreen');
                               }
                             },
                             child: SizedBox(
