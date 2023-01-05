@@ -210,7 +210,7 @@ class _userprofileState extends State<userprofile> {
                                                       Profilecontroller
                                                           .cont.txt_uname.text,
                                                       profillink!,
-                                                      " ${FirebaseAuth.instance.currentUser!.uid}",
+                                                      "${FirebaseAuth.instance.currentUser!.uid}",
                                                       Profilecontroller.cont
                                                           .txt_umobile.text);
 
