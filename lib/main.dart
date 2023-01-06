@@ -1,5 +1,6 @@
 import 'package:fierbase/Controller/local_notification.dart';
 import 'package:fierbase/Controller/signController.dart';
+import 'package:fierbase/View/pagehomescreen.dart';
 import 'package:fierbase/View/seller/addproductpage.dart';
 import 'package:fierbase/View/seller/homeScreen.dart';
 import 'package:fierbase/View/introduction/introScreen.dart';
@@ -14,6 +15,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:sizer/sizer.dart';
+
+import 'View/seller/searchpage.dart';
 
 signController getsign = Get.put(signController());
 firestoreget getstore = Get.put(firestoreget());
@@ -37,6 +40,8 @@ void main() async {
             'intro': (context) => interoScreen(),
             'seller': (context) => Seller(),
             'uprofile' : (context) => userprofile(),
+            'search' : (context) => SearchPage(),
+            'pagehomescreen' : (context) => pagehome(),
           },
         ),
       ),

@@ -6,9 +6,12 @@ import 'package:fierbase/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../Controller/homeScreenController.dart';
 
 class addproduct extends StatefulWidget {
   const addproduct({Key? key}) : super(key: key);
@@ -100,8 +103,7 @@ class _addproductState extends State<addproduct> {
                                           ),
                                         ],
                                         color: Colors.grey.shade100,
-                                        borderRadius:
-                                            BorderRadius.circular(2.h),
+                                        borderRadius: BorderRadius.circular(10),
                                       ),
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(10),
@@ -253,7 +255,7 @@ class _addproductState extends State<addproduct> {
                             width: 340,
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.lightGreenAccent),
+                                  backgroundColor: Colors.blueAccent),
                               onPressed: addproductcontroller
                                           .addpro.productpic !=
                                       null
@@ -316,15 +318,17 @@ class _addproductState extends State<addproduct> {
                                             null;
                                         addproductcontroller
                                             .addpro.sindicator.value = 0.0;
+                                        HomeScreenController.homeController.tabindex.value = 0;
+
                                       } else {
                                         print('Form is invalid');
                                       }
                                     }
                                   : null,
                               child: Text(
-                                "Add Customer",
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 18),
+                                "Launch Product",
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w500),
                               ),
                             ),
                           ),

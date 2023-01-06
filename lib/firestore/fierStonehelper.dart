@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
+import '../Controller/searchpagecontroller.dart';
+
 // create userprofile
 void createfirestore(
   String productName,
@@ -39,6 +41,7 @@ void userwiefirestore(String productName, String productPrice, String dis,
     "userid": "$uid",
     "imageurl": "$picurl",
     "category": "$procategory",
+    "search": SearchPageController.searchcontroller.searchsystem(productName)
   });
 }
 
@@ -76,6 +79,26 @@ Stream<QuerySnapshot<Map<String, dynamic>>> readfirestore() {
   return firebaseFirestore.collection('Product').snapshots();
 }
 
+Stream<QuerySnapshot<Map<String, dynamic>>> searchwiseread() {
+  return FirebaseFirestore.instance
+      .collection("Product")
+      .doc("${FirebaseAuth.instance.currentUser!.uid}")
+      .collection("data")
+      .where("search",
+          arrayContains:
+              SearchPageController.searchcontroller.searchkeywords.value)
+      .snapshots();
+}
+
+Stream<QuerySnapshot<Map<String, dynamic>>> searchwisereadfull() {
+  return FirebaseFirestore.instance
+      .collection("Product")
+      .doc("${FirebaseAuth.instance.currentUser!.uid}")
+      .collection("data")
+      .snapshots();
+}
+
+////////////////////////////////////////////////////////////////////////////////////////
 Stream<QuerySnapshot<Map<String, dynamic>>> userwiseread() {
   return FirebaseFirestore.instance
       .collection("Product")
@@ -84,14 +107,11 @@ Stream<QuerySnapshot<Map<String, dynamic>>> userwiseread() {
       .snapshots();
 }
 
-// List<String> searchkeywords(String char) {
-//   List<String> charsearch = [];
-//   String temp = "";
-//   for (int i = 0; i < char.length; i++) {
-//     temp = temp + char[i];
-//     charsearch.add(temp);
-//   }
-//   return charsearch;
-// }
-// users.doc('Product')..update(
-// {"productname": "$pn", "productprice": "$pp", "description": "$pd"});
+Stream<QuerySnapshot<Map<String, dynamic>>> categorywise() {
+  return FirebaseFirestore.instance
+      .collection("Product")
+      .doc("${FirebaseAuth.instance.currentUser!.uid}")
+      .collection("data")
+      .where("category",isEqualTo: SearchPageController.searchcontroller.category.value)
+      .snapshots();
+}
