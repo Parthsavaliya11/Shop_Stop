@@ -1,14 +1,18 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fierbase/View/seller/editproductpage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../Controller/productdetailcontroller.dart';
 import '../../Controller/searchpagecontroller.dart';
 import '../../firestore/fierStonehelper.dart';
+import '../../model/prodetailmodel.dart';
 import '../../model/searchmodaldata.dart';
 
 class SearchPage extends StatefulWidget {
@@ -17,7 +21,6 @@ class SearchPage extends StatefulWidget {
   @override
   State<SearchPage> createState() => _SearchPageState();
 }
-
 
 class _SearchPageState extends State<SearchPage> {
   @override
@@ -94,9 +97,39 @@ class _SearchPageState extends State<SearchPage> {
                               .searchcontroller.searchdata.length,
                           itemBuilder: (context, index) {
                             return InkWell(
+                              onTap: () {
+                                ProductDetailCont
+                                        .detailcontroller.productdetailmodel =
+                                    Productdetailmodel(
+                                        productname: SearchPageController
+                                            .searchcontroller
+                                            .searchdata[index]
+                                            .productname,
+                                        productprice: SearchPageController
+                                            .searchcontroller
+                                            .searchdata[index]
+                                            .productprice,
+                                        discription: SearchPageController
+                                            .searchcontroller
+                                            .searchdata[index]
+                                            .discription,
+                                        imgurl: SearchPageController
+                                            .searchcontroller
+                                            .searchdata[index]
+                                            .imgurl,
+                                        category: SearchPageController
+                                            .searchcontroller
+                                            .searchdata[index]
+                                            .category);
+                                Get.to(editproduct(),
+                                    transition: Transition.cupertino);
+                              },
                               child: ListTile(
                                 leading: Icon(Icons.search),
-                                title: Text("${SearchPageController.searchcontroller.searchdata[index].productname}",style: GoogleFonts.poppins(),),
+                                title: Text(
+                                  "${SearchPageController.searchcontroller.searchdata[index].productname}",
+                                  style: GoogleFonts.poppins(),
+                                ),
                               ),
                             );
                           }),

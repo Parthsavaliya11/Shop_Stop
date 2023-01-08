@@ -1,5 +1,7 @@
+import 'package:fierbase/View/seller/homeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 import 'package:sizer/sizer.dart';
 
@@ -171,16 +173,19 @@ class _SellerState extends State<Seller> {
                   ],
                 ),
                 Padding(
-                  padding:  EdgeInsets.all(2.5.h),
+                  padding: EdgeInsets.all(2.5.h),
                   child: SignInButton(
                     Buttons.google,
                     text: "Sign up with Google",
                     onPressed: () async {
                       bool msg = await getsign.signWithgoogle();
-                      if (msg == false) {
-                        Get.snackbar("Shop Stop", "Invalid Entry");
+                      if (msg == true) {
+                        GetStorage g1 = GetStorage();
+                        g1.write("auth", 'google');
+                        await Get.to(homeScreen(),
+                            transition: Transition.fadeIn);
                       } else {
-                        Get.offAllNamed('homeScreen');
+                        await Get.snackbar("Shop Stop", "Invalid Entry");
                       }
                     },
                   ),

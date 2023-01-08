@@ -16,6 +16,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:sizer/sizer.dart';
 
+import 'View/seller/editproductpage.dart';
 import 'View/seller/searchpage.dart';
 
 signController getsign = Get.put(signController());
@@ -42,6 +43,7 @@ void main() async {
             'uprofile' : (context) => userprofile(),
             'search' : (context) => SearchPage(),
             'pagehomescreen' : (context) => pagehome(),
+            'edit' : (context) => editproduct(),
           },
         ),
       ),

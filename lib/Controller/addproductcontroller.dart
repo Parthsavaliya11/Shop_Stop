@@ -17,6 +17,8 @@ class addproductcontroller extends GetxController {
   List<String> dropdown = ["Electric", "Fashion", "LifeStyle", "Kitchen"];
   RxString productcategory = "".obs;
 
+  RxBool indicator_Flag = false.obs;
+
   void imagepick(dynamic file) async {
     productpic = file;
     pic.value = file.path;
@@ -27,7 +29,6 @@ class addproductcontroller extends GetxController {
   }
 
   void changecategory(String category) {
-
     productcategory.value = category;
   }
 }

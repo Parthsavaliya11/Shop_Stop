@@ -60,12 +60,12 @@ void userprofileStorage(
   });
 }
 
-Stream<QuerySnapshot<Map<String, dynamic>>> readuserprofile() {
+Future<QuerySnapshot<Map<String, dynamic>>> readuserprofile() {
   return FirebaseFirestore.instance
       .collection("user")
       .doc("${FirebaseAuth.instance.currentUser!.uid}")
       .collection("profiledetail")
-      .snapshots();
+      .get();
 }
 
 void updatefirestore(String pn, String pp, String pd, String user) {
@@ -112,6 +112,7 @@ Stream<QuerySnapshot<Map<String, dynamic>>> categorywise() {
       .collection("Product")
       .doc("${FirebaseAuth.instance.currentUser!.uid}")
       .collection("data")
-      .where("category",isEqualTo: SearchPageController.searchcontroller.category.value)
+      .where("category",
+          isEqualTo: SearchPageController.searchcontroller.category.value)
       .snapshots();
 }

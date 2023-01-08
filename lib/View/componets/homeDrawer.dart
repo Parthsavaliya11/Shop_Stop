@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../Controller/homeScreenController.dart';
 import '../../Controller/userprofile.dart';
 import '../../firestore/fierStonehelper.dart';
 import '../../main.dart';
@@ -12,10 +15,10 @@ import '../seller/addproductpage.dart';
 
 Widget dwr()
 {
-  return Drawer(
+  return  Drawer(
     child: Column(
       children: [
-        Profilecontroller.cont.alluserdetail.length == 0
+        HomeScreenController.homeController.authmethod == 'google'
             ? Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -62,68 +65,18 @@ Widget dwr()
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.all(15),
-                child: Row(
-                  children: [
-                    Column(
-                      children: [
-                        Text(
-                          "Manage Profile",
-                          style: GoogleFonts.poppins(
-                              fontSize: 15.sp,
-                              fontWeight: FontWeight.w600),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Get.to(addproduct());
-                },
-                child: ListTile(
-                  leading: Icon(
-                    Icons.edit_note_rounded,
-                    size: 3.5.h,
-                  ),
-                  title: Text(
-                    "Update Profile",
-                    style: GoogleFonts.poppins(fontSize: 13.sp),
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  getsign.logout();
-                  getsign.googlelogout();
-                  Get.offAllNamed('login');
-                },
-                child: ListTile(
-                  leading: Icon(
-                    Icons.logout_rounded,
-                    size: 3.2.h,
-                  ),
-                  title: Text(
-                    "Logout",
-                    style: GoogleFonts.poppins(fontSize: 13.sp),
-                  ),
-                ),
-              ),
             ],
           ),
         )
-            : StreamBuilder(
-            stream: readuserprofile(),
+            : FutureBuilder(
+            future: readuserprofile(),
             builder:
                 (context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasError) {
                 return Text("${snapshot.error}");
               } else if (snapshot.hasData) {
-                var userdata = snapshot.data!.docs;
-
                 Profilecontroller.cont.alluserdetail.clear();
+                var userdata = snapshot.data!.docs;
 
                 for (QueryDocumentSnapshot z in userdata) {
                   var datadocs = z.data() as Map<String, dynamic>;
@@ -133,6 +86,7 @@ Widget dwr()
                       mobile: datadocs['mobile'],
                       userprofilelink: datadocs['userprofilelink']);
                   Profilecontroller.cont.alluserdetail.value.add(u);
+                  log("${Profilecontroller.cont.alluserdetail.value}");
                 }
                 return Center(
                   child: Column(
@@ -213,6 +167,10 @@ Widget dwr()
                       ),
                       GestureDetector(
                         onTap: () {
+                          HomeScreenController
+                              .homeController.authseprate
+                              .remove("auth");
+
                           getsign.logout();
                           getsign.googlelogout();
                           Get.offAllNamed('login');
@@ -235,20 +193,56 @@ Widget dwr()
               }
               return CircularProgressIndicator();
             }),
-        // InkWell(
-        //   onTap: () {
-        //     getsign.logout();
-        //     getsign.googlelogout();
-        //     Get.offAllNamed('login');
-        //   },
-        //   child: ListTile(
-        //     title: Text("Logout"),
-        //     leading: Icon(
-        //       Icons.logout,
-        //       size: 25,
-        //     ),
-        //   ),
-        // ),
+        Padding(
+          padding: EdgeInsets.all(15),
+          child: Row(
+            children: [
+              Column(
+                children: [
+                  Text(
+                    "Manage Profile",
+                    style: GoogleFonts.poppins(
+                        fontSize: 15.sp, fontWeight: FontWeight.w600),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            Get.to(addproduct());
+          },
+          child: ListTile(
+            leading: Icon(
+              Icons.edit_note_rounded,
+              size: 3.5.h,
+            ),
+            title: Text(
+              "Update Profile",
+              style: GoogleFonts.poppins(fontSize: 13.sp),
+            ),
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            HomeScreenController.homeController.authseprate.remove("auth");
+
+            getsign.logout();
+            getsign.googlelogout();
+            Get.offAllNamed('login');
+          },
+          child: ListTile(
+            leading: Icon(
+              Icons.logout_rounded,
+              size: 3.2.h,
+            ),
+            title: Text(
+              "Logout",
+              style: GoogleFonts.poppins(fontSize: 13.sp),
+            ),
+          ),
+        ),
       ],
     ),
   );

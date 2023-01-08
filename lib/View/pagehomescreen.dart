@@ -1,8 +1,11 @@
 import 'dart:developer';
 
+import 'package:fierbase/Controller/productdetailcontroller.dart';
+import 'package:fierbase/View/seller/editproductpage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 
@@ -11,6 +14,7 @@ import '../Controller/searchpagecontroller.dart';
 import '../firestore/fierStonehelper.dart';
 import '../firestore/firestore controller.dart';
 import '../main.dart';
+import '../model/prodetailmodel.dart';
 
 class pagehome extends StatefulWidget {
   const pagehome({Key? key}) : super(key: key);
@@ -36,9 +40,18 @@ class _pagehomeState extends State<pagehome> {
                     style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w600, fontSize: 16.sp),
                   ),
-                  Text(
-                    "filter",
-                    style: GoogleFonts.poppins(fontSize: 12.sp),
+                  TextButton(
+                    onPressed: () {
+                      setState(() {
+                        SearchPageController
+                            .searchcontroller.category.value = "";
+                      });
+
+                    },
+                    child: Text(
+                      "Clear Filter",
+                      style: GoogleFonts.poppins(fontSize: 12.sp),
+                    ),
                   ),
                 ],
               ),
@@ -55,12 +68,14 @@ class _pagehomeState extends State<pagehome> {
                         margin: EdgeInsets.all(15),
                         child: InkWell(
                           onTap: () {
-                            SearchPageController
-                                    .searchcontroller.category.value =
-                                HomeScreenController
-                                    .homeController.ctegorylistnames[e.key];
-                            log("${SearchPageController
-                                .searchcontroller.category.value}");
+                            setState(() {
+                              SearchPageController
+                                      .searchcontroller.category.value =
+                                  HomeScreenController
+                                      .homeController.ctegorylistnames[e.key];
+                            });
+
+                            log("${SearchPageController.searchcontroller.category.value}");
                           },
                           child: Ink(
                             height: 10.h,
@@ -102,7 +117,7 @@ class _pagehomeState extends State<pagehome> {
               ),
             ),
             StreamBuilder(
-              stream: SearchPageController.searchcontroller.category == ''
+              stream: SearchPageController.searchcontroller.category.value == ''
                   ? userwiseread()
                   : categorywise(),
               builder: (BuildContext context, snapshot) {
@@ -119,12 +134,13 @@ class _pagehomeState extends State<pagehome> {
                     String proprice = finaldata['productprice'];
                     String prodisc = finaldata['description'];
                     String imglink = finaldata['imageurl'];
+                    String category = finaldata['category'];
                     fstoremodel f = fstoremodel(
-                      productname: proname,
-                      productprice: proprice,
-                      productdes: prodisc,
-                      prodocimg: imglink,
-                    );
+                        productname: proname,
+                        productprice: proprice,
+                        productdes: prodisc,
+                        prodocimg: imglink,
+                        category: category);
                     getstore.allfinal.value.add(f);
                   }
                   return getstore.allfinal.length == 0
@@ -140,11 +156,11 @@ class _pagehomeState extends State<pagehome> {
                         ))
                       : Expanded(
                           child: SingleChildScrollView(
-                            physics: getstore.allfinal.length >= 4
+                            physics: getstore.allfinal.length >= 3
                                 ? BouncingScrollPhysics(
                                     parent: AlwaysScrollableScrollPhysics(),
                                   )
-                                : null,
+                                : NeverScrollableScrollPhysics(),
                             child: StaggeredGrid.count(
                                 crossAxisCount: 2,
                                 children: getstore.allfinal
@@ -187,14 +203,20 @@ class _pagehomeState extends State<pagehome> {
                                                 ),
                                                 Row(
                                                   children: [
-                                                    Text(
-                                                      "${index.productname}",
-                                                      style:
-                                                          GoogleFonts.poppins(
-                                                              fontSize: 16.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600),
+                                                    Container(
+                                                      height: 4.h,
+                                                      width: 40.w,
+                                                      child: Text(
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        "${index.productname}",
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                                fontSize: 14.sp,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600),
+                                                      ),
                                                     ),
                                                   ],
                                                 ),
@@ -218,7 +240,30 @@ class _pagehomeState extends State<pagehome> {
                                                               backgroundColor:
                                                                   Colors
                                                                       .blueAccent),
-                                                          onPressed: () {},
+                                                          onPressed: () {
+                                                            ProductDetailCont
+                                                                    .detailcontroller
+                                                                    .productdetailmodel =
+                                                                Productdetailmodel(
+                                                                    productname:
+                                                                        index
+                                                                            .productname,
+                                                                    productprice:
+                                                                        index
+                                                                            .productprice,
+                                                                    discription:
+                                                                        index
+                                                                            .productdes,
+                                                                    imgurl: index
+                                                                        .prodocimg,
+                                                                    category: index
+                                                                        .category);
+                                                            Get.to(
+                                                                editproduct(),
+                                                                transition:
+                                                                    Transition
+                                                                        .cupertino);
+                                                          },
                                                           child: Text(
                                                             "Edit",
                                                             style: GoogleFonts

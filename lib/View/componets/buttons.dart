@@ -2,6 +2,7 @@ import 'package:fierbase/View/seller/testLogin.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 
@@ -37,6 +38,10 @@ Widget loginbtn() {
               getsign.txt_mailIn.text, getsign.txt_passwordIn.text);
           await Get.snackbar("${"ShopStop"}", "${msg}");
           if (msg == "Login success") {
+            GetStorage g1 = GetStorage();
+
+            g1.write("auth", 'custom');
+
             Get.offAllNamed('homeScreen');
             getsign.txt_mailIn.clear();
             getsign.txt_passwordIn.clear();
@@ -60,6 +65,9 @@ Widget signupbtn() {
               getsign.txt_mailUp.text, getsign.txt_passwordUp.text);
 
           if (msg == "Registerd success") {
+            GetStorage g1 = GetStorage();
+
+            g1.write("auth", 'custom');
             await Get.offNamed('uprofile');
             getsign.txt_mailIn.clear();
             getsign.txt_passwordIn.clear();

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:sign_in_button/sign_in_button.dart';
@@ -80,6 +81,9 @@ class _signupscreenState extends State<signupscreen> {
                               if (msg == false) {
                                 Get.snackbar("Shop Stop", "Invalid Entry");
                               } else {
+                                GetStorage g1 = GetStorage();
+
+                                g1.write("auth", 'google');
                                 Get.offAllNamed('homeScreen');
                               }
                             },

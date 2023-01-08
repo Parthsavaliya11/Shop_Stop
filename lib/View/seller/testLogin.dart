@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:fierbase/View/seller/homeScreen.dart';
 import 'package:fierbase/View/seller/testsignup.dart';
 import 'package:flutter/cupertino.dart';
@@ -5,6 +7,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 import 'package:sizer/sizer.dart';
@@ -87,12 +90,15 @@ class _loginscreenState extends State<loginscreen> {
                           CupertinoButton(
                             onPressed: () async {
                               bool msg = await getsign.signWithgoogle();
-                              if (msg == false) {
-                                Get.snackbar("Shop Stop", "Invalid Entry");
+                              if (msg == true) {
+                                GetStorage g1 = GetStorage();
+
+                                g1.write("auth", 'google');
+
+                                await Get.to(homeScreen());
                               } else {
-                                var key = Profilecontroller.cont.userformcount
-                                    .read("formvount");
-                                await Get.offAllNamed('homeScreen');
+                                log("${msg } ----- gufgqukfgqeukg ufqeufuwehuwgukgihwILGhg");
+                                Get.snackbar("Shop Stop", "Invalid Entry");
                               }
                             },
                             child: SizedBox(
