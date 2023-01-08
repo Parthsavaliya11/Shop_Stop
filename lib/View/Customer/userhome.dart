@@ -56,7 +56,7 @@ class _UserhomeState extends State<Userhome> {
               padding: EdgeInsets.only(right: 2.w),
               child: IconButton(
                 iconSize: 25,
-                onPressed: () {},
+                onPressed: alldataread,
                 icon: Icon(Icons.search),
               ),
             ),
@@ -202,7 +202,9 @@ class _UserhomeState extends State<Userhome> {
                 ),
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+
+                },
                 child: ListTile(
                   leading: Icon(
                     Icons.edit_note_rounded,
@@ -239,7 +241,6 @@ class _UserhomeState extends State<Userhome> {
         ),
         body: Column(
           children: [
-
             Expanded(
               child: PageView(
                 onPageChanged: (index) {},

@@ -165,5 +165,5 @@ void editProfile(String name, String mobile, String docid) {
 }
 
 Stream<QuerySnapshot<Map<String, dynamic>>> alldataread() {
-  return FirebaseFirestore.instance.collection("Product").snapshots();
+  return FirebaseFirestore.instance.collectionGroup("data").snapshots();
 }
