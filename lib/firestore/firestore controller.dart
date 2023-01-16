@@ -22,8 +22,8 @@ class firestoreget extends GetxController {
 }
 
 class fstoremodel {
-  String? productname, productprice, productdes, prodocimg,category;
+  String? productname, productprice, productdes, prodocimg,category,docid;
 
   fstoremodel(
-      {this.productname, this.productprice, this.productdes, this.prodocimg,this.category});
+      {this.productname, this.productprice, this.productdes, this.prodocimg,this.category,this.docid});
 }

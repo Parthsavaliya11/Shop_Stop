@@ -7,19 +7,15 @@ import 'package:fierbase/View/seller/addproductpage.dart';
 import 'package:fierbase/View/seller/searchpage.dart';
 import 'package:fierbase/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:fierbase/Controller/addproductcontroller.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../Controller/userprofile.dart';
 import '../../firestore/fierStonehelper.dart';
-import '../componets/homeDrawer.dart';
 
 class homeScreen extends StatefulWidget {
   const homeScreen({Key? key}) : super(key: key);

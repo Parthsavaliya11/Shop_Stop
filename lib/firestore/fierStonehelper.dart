@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -30,19 +32,21 @@ void createfirestore(
 // User Wise Data Store
 void userwiefirestore(String productName, String productPrice, String dis,
     String uid, String picurl, String procategory) {
-  FirebaseFirestore.instance
+  final usercollection = FirebaseFirestore.instance
       .collection("Product")
       .doc("${uid}")
-      .collection("data")
-      .add({
+      .collection("data");
+
+  usercollection.add({
     "productname": "$productName",
     "productprice": "$productPrice",
     "description": "$dis",
     "userid": "$uid",
     "imageurl": "$picurl",
     "category": "$procategory",
-    "search": SearchPageController.searchcontroller.searchsystem(productName)
+    "search": SearchPageController.searchcontroller.searchsystem(productName),
   });
+
 }
 
 // User Profile Details
@@ -115,4 +119,36 @@ Stream<QuerySnapshot<Map<String, dynamic>>> categorywise() {
       .where("category",
           isEqualTo: SearchPageController.searchcontroller.category.value)
       .snapshots();
+}
+
+// userwise update firestore
+void updateFirestore(String productName, String productPrice, String dis,
+    String uid, String picurl, String procategory) {
+  FirebaseFirestore.instance.collection("Product").doc("${uid}").update({
+    "productname": "$productName",
+    "productprice": "$productPrice",
+    "description": "$dis",
+    "userid": "$uid",
+    "imageurl": "$picurl",
+    "category": "$procategory",
+    "search": SearchPageController.searchcontroller.searchsystem(productName)
+  });
+}
+
+void updatedocFirestore(String productName, String productPrice, String dis,
+    String uid, String picurl, String procategory,String docid) {
+  FirebaseFirestore.instance
+      .collection("Product")
+      .doc("${uid}")
+      .collection("data")
+      .doc("$docid")
+      .update({
+    "productname": "$productName",
+    "productprice": "$productPrice",
+    "description": "$dis",
+    "userid": "$uid",
+    "imageurl": "$picurl",
+    "category": "$procategory",
+    "search": SearchPageController.searchcontroller.searchsystem(productName)
+  });
 }

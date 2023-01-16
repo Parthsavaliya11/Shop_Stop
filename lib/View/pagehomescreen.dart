@@ -42,11 +42,7 @@ class _pagehomeState extends State<pagehome> {
                   ),
                   TextButton(
                     onPressed: () {
-                      setState(() {
-                        SearchPageController
-                            .searchcontroller.category.value = "";
-                      });
-
+                      SearchPageController.searchcontroller.category.value = "";
                     },
                     child: Text(
                       "Clear Filter",
@@ -68,12 +64,10 @@ class _pagehomeState extends State<pagehome> {
                         margin: EdgeInsets.all(15),
                         child: InkWell(
                           onTap: () {
-                            setState(() {
-                              SearchPageController
-                                      .searchcontroller.category.value =
-                                  HomeScreenController
-                                      .homeController.ctegorylistnames[e.key];
-                            });
+                            SearchPageController
+                                    .searchcontroller.category.value =
+                                HomeScreenController
+                                    .homeController.ctegorylistnames[e.key];
 
                             log("${SearchPageController.searchcontroller.category.value}");
                           },
@@ -116,184 +110,178 @@ class _pagehomeState extends State<pagehome> {
                     .toList(),
               ),
             ),
-            StreamBuilder(
-              stream: SearchPageController.searchcontroller.category.value == ''
-                  ? userwiseread()
-                  : categorywise(),
-              builder: (BuildContext context, snapshot) {
-                if (snapshot.hasError) {
-                  Text("${snapshot.error}");
-                } else if (snapshot.hasData) {
-                  getstore.allfinal.clear();
-                  var storedata = snapshot.data!;
+            Obx(
+              () => StreamBuilder(
+                stream:
+                    SearchPageController.searchcontroller.category.value == ''
+                        ? userwiseread()
+                        : categorywise(),
+                builder: (BuildContext context, snapshot) {
+                  if (snapshot.hasError) {
+                    Text("${snapshot.error}");
+                  } else if (snapshot.hasData) {
+                    getstore.allfinal.clear();
+                    var storedata = snapshot.data!;
 
-                  for (var z in storedata.docs) {
-                    Map finaldata = z.data() as Map<String, dynamic>;
-
-                    String proname = finaldata['productname'];
-                    String proprice = finaldata['productprice'];
-                    String prodisc = finaldata['description'];
-                    String imglink = finaldata['imageurl'];
-                    String category = finaldata['category'];
-                    fstoremodel f = fstoremodel(
-                        productname: proname,
-                        productprice: proprice,
-                        productdes: prodisc,
-                        prodocimg: imglink,
-                        category: category);
-                    getstore.allfinal.value.add(f);
-                  }
-                  return getstore.allfinal.length == 0
-                      ? Expanded(
-                          child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              height: 32.h,
-                              child: Image.asset("assets/images/cart.png"),
-                            ),
-                          ],
-                        ))
-                      : Expanded(
-                          child: SingleChildScrollView(
-                            physics: getstore.allfinal.length >= 3
-                                ? BouncingScrollPhysics(
-                                    parent: AlwaysScrollableScrollPhysics(),
-                                  )
-                                : NeverScrollableScrollPhysics(),
-                            child: StaggeredGrid.count(
-                                crossAxisCount: 2,
-                                children: getstore.allfinal
-                                    .map(
-                                      (index) => Padding(
-                                        padding: EdgeInsets.all(1.h),
-                                        child: Container(
-                                          height: 35.h,
-                                          width: 10.h,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  width: 0.2,
-                                                  color: Colors.grey),
-                                              color: Colors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(17),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                    color: Colors.grey.shade200,
-                                                    blurRadius: 10,
-                                                    offset: Offset(0, 5))
-                                              ]),
-                                          child: Padding(
-                                            padding: EdgeInsets.all(2.w),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceAround,
-                                              children: [
-                                                Container(
-                                                  height: 20.h,
-                                                  width: double.infinity,
-                                                  child: ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                    child: Image.network(
-                                                        fit: BoxFit.cover,
-                                                        "${index.prodocimg}"),
-                                                  ),
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    Container(
-                                                      height: 4.h,
-                                                      width: 40.w,
-                                                      child: Text(
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        "${index.productname}",
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                                fontSize: 14.sp,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                Row(
+                    for (var z in storedata.docs) {
+                      Map finaldata = z.data() as Map<String, dynamic>;
+                      String docid = z.id;
+                      String proname = finaldata['productname'];
+                      String proprice = finaldata['productprice'];
+                      String prodisc = finaldata['description'];
+                      String imglink = finaldata['imageurl'];
+                      String category = finaldata['category'];
+                      fstoremodel f = fstoremodel(
+                          productname: proname,
+                          productprice: proprice,
+                          productdes: prodisc,
+                          prodocimg: imglink,
+                          category: category,
+                          docid: docid);
+                      getstore.allfinal.value.add(f);
+                    }
+                    return getstore.allfinal.length == 0
+                        ? Expanded(
+                            child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                height: 32.h,
+                                child: Image.asset("assets/images/cart.png"),
+                              ),
+                            ],
+                          ))
+                        : Expanded(
+                            child: SingleChildScrollView(
+                              physics: getstore.allfinal.length >= 3
+                                  ? BouncingScrollPhysics(
+                                      parent: AlwaysScrollableScrollPhysics(),
+                                    )
+                                  : NeverScrollableScrollPhysics(),
+                              child: StaggeredGrid.count(
+                                  crossAxisCount: 2,
+                                  children: getstore.allfinal
+                                      .map(
+                                        (index) => Padding(
+                                          padding: EdgeInsets.all(1.h),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              ProductDetailCont.detailcontroller
+                                                      .productdetailmodel =
+                                                  Productdetailmodel(
+                                                      productname:
+                                                          index.productname,
+                                                      productprice:
+                                                          index.productprice,
+                                                      discription:
+                                                          index.productdes,
+                                                      imgurl: index.prodocimg,
+                                                      category: index.category,
+                                                      docid: index.docid);
+                                              Get.to(editproduct(),
+                                                  transition:
+                                                      Transition.cupertino);
+                                            },
+                                            child: Container(
+                                              height: 35.h,
+                                              width: 10.h,
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      width: 0.2,
+                                                      color: Colors.grey),
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(17),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                        color: Colors
+                                                            .grey.shade200,
+                                                        blurRadius: 10,
+                                                        offset: Offset(0, 5))
+                                                  ]),
+                                              child: Padding(
+                                                padding: EdgeInsets.all(2.w),
+                                                child: Column(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment
-                                                          .spaceBetween,
+                                                          .spaceAround,
                                                   children: [
-                                                    Text(
-                                                      "${index.productprice} \$",
-                                                      style:
-                                                          GoogleFonts.poppins(
-                                                              fontSize: 14.sp),
+                                                    Container(
+                                                      height: 20.h,
+                                                      width: double.infinity,
+                                                      child: ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                        child: Image.network(
+                                                            fit: BoxFit.cover,
+                                                            "${index.prodocimg}"),
+                                                      ),
                                                     ),
-                                                    SizedBox(
-                                                      height: 35,
-                                                      child: ElevatedButton(
-                                                          style: ElevatedButton.styleFrom(
-                                                              shape:
-                                                                  StadiumBorder(),
-                                                              backgroundColor:
-                                                                  Colors
-                                                                      .blueAccent),
-                                                          onPressed: () {
-                                                            ProductDetailCont
-                                                                    .detailcontroller
-                                                                    .productdetailmodel =
-                                                                Productdetailmodel(
-                                                                    productname:
-                                                                        index
-                                                                            .productname,
-                                                                    productprice:
-                                                                        index
-                                                                            .productprice,
-                                                                    discription:
-                                                                        index
-                                                                            .productdes,
-                                                                    imgurl: index
-                                                                        .prodocimg,
-                                                                    category: index
-                                                                        .category);
-                                                            Get.to(
-                                                                editproduct(),
-                                                                transition:
-                                                                    Transition
-                                                                        .cupertino);
-                                                          },
+                                                    Row(
+                                                      children: [
+                                                        Container(
+                                                          height: 4.h,
+                                                          width: 40.w,
                                                           child: Text(
-                                                            "Edit",
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            "${index.productname}",
                                                             style: GoogleFonts
                                                                 .poppins(
-                                                                    color: Colors
-                                                                        .white),
-                                                          )),
-                                                    )
+                                                                    fontSize:
+                                                                        14.sp,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Text(
+                                                          "${index.productprice} \$",
+                                                          style: GoogleFonts
+                                                              .poppins(
+                                                                  fontSize:
+                                                                      14.sp),
+                                                        ),
+                                                        Text(
+                                                          "${index.category}",
+                                                          style: GoogleFonts
+                                                              .poppins(
+                                                                  color: Colors
+                                                                      .black),
+                                                        )
+                                                      ],
+                                                    ),
                                                   ],
                                                 ),
-                                              ],
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    )
-                                    .toList()),
-                          ),
-                        );
-                }
-                return const Center(
-                  child: SizedBox(
-                    height: 35,
-                    width: 35,
-                    child: CircularProgressIndicator(
-                      color: Colors.black,
+                                      )
+                                      .toList()),
+                            ),
+                          );
+                  }
+                  return Center(
+                    child: SizedBox(
+                      height: 35,
+                      width: 35,
+                      child: CircularProgressIndicator(
+                        color: Colors.black,
+                      ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
           ],
         ),

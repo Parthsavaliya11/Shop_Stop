@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:fierbase/Controller/addproductcontroller.dart';
@@ -11,6 +12,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 import '../../Controller/homeScreenController.dart';
 
 class addproduct extends StatefulWidget {
@@ -33,6 +35,7 @@ class _addproductState extends State<addproduct> {
       },
       child: SafeArea(
         child: Scaffold(
+          resizeToAvoidBottomInset: true,
           backgroundColor: Colors.white,
           body: Form(
             key: getstore.k,
@@ -115,12 +118,23 @@ class _addproductState extends State<addproduct> {
                                 color: Colors.blueAccent),
                           ),
                         ),
-                        addtxtfiels(getstore.pronamee, TextInputType.text,
-                            "Product Name", "Enter Name"),
-                        addtxtfiels(getstore.propricee, TextInputType.number,
-                            "Product Price", "Enter Price"),
-                        addtxtfiels(getstore.prodescription, TextInputType.text,
-                            "Product Description", "Enter Description"),
+                        addtxtfiels(TextInputAction.next, getstore.pronamee,
+                            TextInputType.text, "Product Name", "Enter Name",
+                            maxline: 25),
+                        addtxtfiels(
+                            TextInputAction.next,
+                            getstore.propricee,
+                            TextInputType.number,
+                            "Product Price",
+                            "Enter Price",
+                            maxline: 5),
+                        addtxtfiels(
+                            TextInputAction.done,
+                            getstore.prodescription,
+                            TextInputType.text,
+                            "Product Description",
+                            "Enter Description",
+                            maxline: 200),
                         Padding(
                           padding: EdgeInsets.all(2.5.h),
                           child: DropdownButtonFormField(
@@ -141,65 +155,62 @@ class _addproductState extends State<addproduct> {
                                   .toList(),
                               onChanged: (value) {}),
                         ),
-                         Padding(
-                            padding: EdgeInsets.all(2.5.h),
-                            child: SizedBox(
-                              height: 50,
-                              width: 340,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.blueAccent),
-                                onPressed: addproductcontroller
-                                            .addpro.productpic !=
-                                        null
-                                    ? () async {
-                                        if (getstore.k.currentState!
-                                            .validate()) {
-                                          getstore.k.currentState!.save();
+                        Padding(
+                          padding: EdgeInsets.all(2.5.h),
+                          child: SizedBox(
+                            height: 50,
+                            width: 340,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.blueAccent),
+                              onPressed: addproductcontroller
+                                          .addpro.productpic !=
+                                      null
+                                  ? () async {
+                                      if (getstore.k.currentState!.validate()) {
+                                        getstore.k.currentState!.save();
 
-                                          addproductcontroller.addpro.imagepick(
-                                              addproductcontroller
-                                                  .addpro.productpic!);
-                                          cloudStorageHelper.storageHelp
-                                              .firestorage();
-                                          String? imageurl =
-                                              await cloudStorageHelper
-                                                  .storageHelp
-                                                  .getstorage();
-                                          userwiefirestore(
-                                              getstore.pronamee.text,
-                                              getstore.propricee.text,
-                                              getstore.prodescription.text,
-                                              "${getsign.userid.obs}",
-                                              "${imageurl}",
-                                              "${addproductcontroller.addpro.productcategory}");
-                                          getlocal.showbuttonmethod();
-                                          Get.snackbar("${"ShopStop"}",
-                                              "Your Product Lauch Successfully");
-                                          Get.offAllNamed('homeScreen');
-                                          getstore.pronamee.clear();
-                                          getstore.propricee.clear();
-                                          getstore.prodescription.clear();
-                                          addproductcontroller
-                                              .addpro.productpic = null;
-                                          addproductcontroller
-                                              .addpro.sindicator.value = 0.0;
-                                          HomeScreenController.homeController
-                                              .tabindex.value = 0;
-                                        } else {
-                                          print('Form is invalid');
-                                        }
+                                        addproductcontroller.addpro.imagepick(
+                                            addproductcontroller
+                                                .addpro.productpic!);
+                                        cloudStorageHelper.storageHelp
+                                            .firestorage();
+                                        String? imageurl =
+                                            await cloudStorageHelper.storageHelp
+                                                .getstorage(context);
+                                        userwiefirestore(
+                                            getstore.pronamee.text,
+                                            getstore.propricee.text,
+                                            getstore.prodescription.text,
+                                            "${getsign.userid.obs}",
+                                            "$imageurl",
+                                            "${addproductcontroller.addpro.productcategory}");
+                                        getlocal.showbuttonmethod();
+                                        Get.snackbar("${"ShopStop"}",
+                                            "Your Product Lauch Successfully");
+                                        Get.offAllNamed('homeScreen');
+                                        getstore.pronamee.clear();
+                                        getstore.propricee.clear();
+                                        getstore.prodescription.clear();
+                                        addproductcontroller.addpro.productpic =
+                                            null;
+                                        addproductcontroller
+                                            .addpro.sindicator.value = 0.0;
+                                        HomeScreenController
+                                            .homeController.tabindex.value = 0;
+                                      } else {
+                                        print('Form is invalid');
                                       }
-                                    : null,
-                                child: Text(
-                                  "Launch Product",
-                                  style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.w500),
-                                ),
+                                    }
+                                  : null,
+                              child: Text(
+                                "Launch Product",
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w500),
                               ),
                             ),
                           ),
-
+                        ),
                       ],
                     ),
                   ),

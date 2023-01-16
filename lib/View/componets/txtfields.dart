@@ -32,11 +32,14 @@ Widget txtfield(String validation, String hinttext, IconData iconData,
   );
 }
 
-Widget addtxtfiels(TextEditingController txt_cont, TextInputType txt_type,
-    String hint, String validate) {
+Widget addtxtfiels( TextInputAction txtaction,TextEditingController txt_cont, TextInputType txt_type,
+    String hint, String validate,
+    {int? maxline}) {
   return Padding(
-    padding: EdgeInsets.only(right: 5.w, left: 5.w,  bottom: 2.h,top: 2.h),
+    padding: EdgeInsets.only(right: 5.w, left: 5.w, bottom: 2.h, top: 2.h),
     child: TextFormField(
+        textInputAction: txtaction,
+      maxLength: maxline,
       validator: (value) => value!.isEmpty ? '$validate' : null,
       controller: txt_cont,
       keyboardType: txt_type,
@@ -44,7 +47,6 @@ Widget addtxtfiels(TextEditingController txt_cont, TextInputType txt_type,
         filled: true,
         fillColor: Colors.grey.shade200,
         hintText: '$hint',
-
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.white),
           borderRadius: BorderRadius.circular(11),
