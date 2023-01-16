@@ -4,6 +4,7 @@ import 'package:fierbase/Controller/homeScreenController.dart';
 import 'package:fierbase/Firebase/Messaging/messageing.dart';
 import 'package:fierbase/View/pagehomescreen.dart';
 import 'package:fierbase/View/seller/addproductpage.dart';
+import 'package:fierbase/View/seller/adminaccountpage.dart';
 import 'package:fierbase/View/seller/searchpage.dart';
 import 'package:fierbase/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -298,7 +299,7 @@ class _homeScreenState extends State<homeScreen> {
           children: [
             pagehome(),
             addproduct(),
-            pagehome(),
+            Adminaccountpage(),
           ],
         ),
       ),

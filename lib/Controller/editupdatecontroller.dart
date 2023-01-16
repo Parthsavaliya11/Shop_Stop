@@ -20,9 +20,15 @@ class Editupdatecontroller extends GetxController
   RxString imgpath = "".obs;
   RxString pic = "".obs;
   Updatemodel updatemodel = Updatemodel();
+  RxString updatedcategory = "".obs , updatedimg = "".obs;
+  final key = GlobalKey<FormState>();
 
   TextEditingController txt_proname = TextEditingController();
   TextEditingController txt_proprice = TextEditingController();
   TextEditingController txt_prodiscription = TextEditingController();
+
+  void editupdatevalidation()
+  {
+  }
 
 }

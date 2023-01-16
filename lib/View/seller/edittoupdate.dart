@@ -6,6 +6,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:fierbase/Controller/addproductcontroller.dart';
 import 'package:fierbase/Controller/editupdatecontroller.dart';
 import 'package:fierbase/Storage/storage.dart';
+import 'package:fierbase/View/seller/homeScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
@@ -48,7 +49,7 @@ class _editupdateState extends State<editupdate> {
         child: Scaffold(
       resizeToAvoidBottomInset: true,
       body: Form(
-        key: Editupdatecontroller.editupdate.updateproduct,
+        key: Editupdatecontroller.editupdate.key,
         child: Column(
           children: [
             Expanded(
@@ -145,22 +146,29 @@ class _editupdateState extends State<editupdate> {
                     Padding(
                       padding: EdgeInsets.all(2.5.h),
                       child: DropdownButtonFormField(
-                          onSaved: (selected) {
-                            addproductcontroller.addpro
-                                .changecategory(selected.toString());
-                          },
-                          validator: (value) {
-                            if (value == null) {
-                              return 'Please Select Category';
-                            }
-                          },
-                          hint: Text("Product Category"),
-                          focusColor: Colors.lightGreenAccent,
-                          items: addproductcontroller.addpro.dropdown
-                              .map((e) => DropdownMenuItem<String>(
-                                  value: e, child: Text("${e}")))
-                              .toList(),
-                          onChanged: (value) {}),
+                        value: Editupdatecontroller
+                            .editupdate.updatemodel.category,
+                        onSaved: (selected) {
+                          Editupdatecontroller.editupdate.updatedcategory
+                              .value = selected.toString();
+                        },
+                        validator: (value) {
+                          if (value == null) {
+                            return 'Please Select Category';
+                          }
+                          return null;
+                        },
+                        hint: Text("Product Category"),
+                        focusColor: Colors.lightGreenAccent,
+                        items: addproductcontroller.addpro.dropdown
+                            .map((e) => DropdownMenuItem<String>(
+                                value: e, child: Text("${e}")))
+                            .toList(),
+                        onChanged: (String? value) {
+                          Editupdatecontroller
+                              .editupdate.updatedcategory.value = value!;
+                        },
+                      ),
                     ),
                     Padding(
                       padding: EdgeInsets.all(2.5.h),
@@ -171,15 +179,24 @@ class _editupdateState extends State<editupdate> {
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.blueAccent),
                           onPressed: () async {
-                            String? link = await cloudStorageHelper.storageHelp
-                                .updateimg(
-                                    context,
+                            String? link;
+                            Editupdatecontroller.editupdate.imgpath.value != ''
+                                ? Editupdatecontroller
+                                        .editupdate.updatedimg.value =
+                                    (await cloudStorageHelper.storageHelp.updateimg(
+                                        context,
+                                        Editupdatecontroller
+                                            .editupdate.updatemodel.imgurl!,
+                                        File(
+                                            "${Editupdatecontroller.editupdate.imgpath.value}")))!
+                                : Editupdatecontroller
+                                        .editupdate.updatedimg.value =
                                     Editupdatecontroller
-                                        .editupdate.updatemodel.imgurl!,
-                                    File(
-                                        "${Editupdatecontroller.editupdate.imgpath.value}"));
+                                        .editupdate.updatemodel.imgurl!;
 
                             log("$link aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+                            Editupdatecontroller.editupdate.key.currentState!
+                                .save();
                             updatedocFirestore(
                                 Editupdatecontroller
                                     .editupdate.updatemodel.productname!,
@@ -188,10 +205,13 @@ class _editupdateState extends State<editupdate> {
                                 Editupdatecontroller
                                     .editupdate.txt_prodiscription.text,
                                 FirebaseAuth.instance.currentUser!.uid,
-                                link!,
-                                "Fashion",
+                                Editupdatecontroller
+                                    .editupdate.updatedimg.value,
+                                Editupdatecontroller
+                                    .editupdate.updatedcategory.value,
                                 Editupdatecontroller
                                     .editupdate.updatemodel.docid!);
+                            Get.offAll(homeScreen());
                           },
                           child: Text(
                             "Update Product",

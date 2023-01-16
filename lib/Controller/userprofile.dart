@@ -28,7 +28,7 @@ class Profilecontroller extends GetxController {
 }
 
 class UserprofileData {
-  String? mobile, username, userprofilelink;
+  String? mobile, username, userprofilelink,docid;
 
-  UserprofileData({this.mobile, this.username, this.userprofilelink});
+  UserprofileData({this.mobile, this.username, this.userprofilelink,this.docid});
 }

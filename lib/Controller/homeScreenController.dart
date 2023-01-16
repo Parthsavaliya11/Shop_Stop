@@ -18,7 +18,7 @@ class HomeScreenController extends GetxController {
     "assets/images/lifestyle.png",
     "assets/images/kitchen.png"
   ];
-  List ctegorylistnames = ["Fashion", "Electric", "Lifestyle", "Kitchen"];
+  List ctegorylistnames = ["Fashion", "Electric", "LifeStyle", "Kitchen"];
 
   void abc() {}
 }

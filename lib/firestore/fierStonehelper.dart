@@ -46,7 +46,6 @@ void userwiefirestore(String productName, String productPrice, String dis,
     "category": "$procategory",
     "search": SearchPageController.searchcontroller.searchsystem(productName),
   });
-
 }
 
 // User Profile Details
@@ -136,7 +135,7 @@ void updateFirestore(String productName, String productPrice, String dis,
 }
 
 void updatedocFirestore(String productName, String productPrice, String dis,
-    String uid, String picurl, String procategory,String docid) {
+    String uid, String picurl, String procategory, String docid) {
   FirebaseFirestore.instance
       .collection("Product")
       .doc("${uid}")
@@ -150,5 +149,17 @@ void updatedocFirestore(String productName, String productPrice, String dis,
     "imageurl": "$picurl",
     "category": "$procategory",
     "search": SearchPageController.searchcontroller.searchsystem(productName)
+  });
+}
+
+void editProfile(String name, String mobile,String docid) {
+  FirebaseFirestore.instance
+      .collection("user")
+      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .collection("profiledetail")
+      .doc("$docid")
+      .update({
+    "username": name,
+    "mobile": mobile,
   });
 }

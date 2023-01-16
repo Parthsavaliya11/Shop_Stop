@@ -76,7 +76,6 @@ class cloudStorageHelper {
   Future<String?> updateimg(
       BuildContext context, String refurl, File updateimg) async {
       ProgressDialog pd = ProgressDialog(context: context);
-    // file selecting/uploading process
     uploadTask = FirebaseStorage.instance
         .refFromURL("$refurl")
         .putFile(updateimg);
@@ -98,7 +97,9 @@ class cloudStorageHelper {
           valueFontSize: 10.sp);
       pd.update(value: Editupdatecontroller.editupdate.indicatorvalue!.toInt());
     });
-      pd.close();
+
+
+     pd.close(delay: 0);
 
       TaskSnapshot taskSnapshot = await uploadTask!;
     downloadurl = await taskSnapshot.ref.getDownloadURL();
