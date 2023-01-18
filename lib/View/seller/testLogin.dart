@@ -27,7 +27,6 @@ class loginscreen extends StatefulWidget {
 class _loginscreenState extends State<loginscreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -89,6 +88,7 @@ class _loginscreenState extends State<loginscreen> {
                           ),
                           CupertinoButton(
                             onPressed: () async {
+
                               bool msg = await getsign.signWithgoogle();
                               if (msg == true) {
                                 GetStorage g1 = GetStorage();
@@ -97,7 +97,7 @@ class _loginscreenState extends State<loginscreen> {
 
                                 await Get.to(homeScreen());
                               } else {
-                                log("${msg } ----- gufgqukfgqeukg ufqeufuwehuwgukgihwILGhg");
+                                log("${msg} ----- gufgqukfgqeukg ufqeufuwehuwgukgihwILGhg");
                                 Get.snackbar("Shop Stop", "Invalid Entry");
                               }
                             },

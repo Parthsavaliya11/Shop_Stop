@@ -13,7 +13,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';
 import '../../Controller/editprofilecontroller.dart';
 import '../../Controller/homeScreenController.dart';
-import '../../Controller/userprofile.dart';
 import 'homeScreen.dart';
 
 class Updateprofile extends StatefulWidget {
@@ -25,6 +24,13 @@ class Updateprofile extends StatefulWidget {
 
 class _UpdateprofileState extends State<Updateprofile> {
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    Editprofile.editprofile.profileimg.value = "";
+    Editprofile.editprofile.isprocess = false.obs;
+  }
+
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -187,38 +193,63 @@ class _UpdateprofileState extends State<Updateprofile> {
                           SizedBox(
                             height: 10.h,
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(right: 5.w, left: 5.w),
-                            child: SizedBox(
-                              width: 90.w,
-                              height: 7.h,
-                              child: CupertinoButton(
-                                  color: Colors.blueAccent,
-                                  child: Text(
-                                    "Submit",
-                                    style: GoogleFonts.poppins(),
-                                  ),
-                                  onPressed: () async {
-                                    if (Editprofile
-                                            .editprofile.profileimg.value !=
-                                        '') {
-                                      FirebaseStorage.instance
-                                          .refFromURL(
-                                              "${Editprofile.editprofile.refurl}")
-                                          .putFile(
-                                            File(Editprofile
-                                                .editprofile.profileimg.value),
-                                          );
-                                    } else {}
-                                    editProfile(
-                                        Editprofile.editprofile.Utxt_uname.text,
-                                        Editprofile
-                                            .editprofile.Utxt_umobile.text,
-                                        Editprofile.editprofile
-                                            .editprofilemodel!.docid!);
-                                    HomeScreenController.homeController.tabindex.value = 0;
-                                    Get.offAll(homeScreen());
-                                  }),
+                          Obx(
+                            () => Padding(
+                              padding: EdgeInsets.only(right: 5.w, left: 5.w),
+                              child: SizedBox(
+                                width: 90.w,
+                                height: 7.h,
+                                child: CupertinoButton(
+                                    color: Colors.blueAccent,
+                                    child: Editprofile
+                                            .editprofile.isprocess.value
+                                        ? SizedBox(
+                                            height: 4.h,
+                                            width: 4.h,
+                                            child: CircularProgressIndicator(
+                                              backgroundColor: Colors.white,
+                                            ))
+                                        : Text(
+                                            "Submit",
+                                            style: GoogleFonts.poppins(),
+                                          ),
+                                    onPressed:  Editprofile
+                                        .editprofile.isprocess.value ? null:() async {
+                                      Editprofile.editprofile.isprocess.value =
+                                          true;
+                                      if (Editprofile
+                                              .editprofile.profileimg.value !=
+                                          '') {
+                                        editProfile(
+                                            Editprofile
+                                                .editprofile.Utxt_uname.text,
+                                            Editprofile
+                                                .editprofile.Utxt_umobile.text,
+                                            Editprofile.editprofile
+                                                .editprofilemodel!.docid!);
+                                        HomeScreenController
+                                            .homeController.tabindex.value = 0;
+                                        cloudStorageHelper.storageHelp
+                                            .Updateprofileimg(
+                                                Editprofile.editprofile
+                                                    .editprofilemodel!.refurl!,
+                                                Editprofile.editprofile
+                                                    .profileimg.value,
+                                                context);
+                                      } else {
+                                        editProfile(
+                                            Editprofile
+                                                .editprofile.Utxt_uname.text,
+                                            Editprofile
+                                                .editprofile.Utxt_umobile.text,
+                                            Editprofile.editprofile
+                                                .editprofilemodel!.docid!);
+                                        HomeScreenController
+                                            .homeController.tabindex.value = 0;
+                                        Get.offAll(homeScreen());
+                                      }
+                                    }),
+                              ),
                             ),
                           ),
                         ],

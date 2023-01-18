@@ -12,6 +12,7 @@ import 'package:fierbase/View/seller/userprofilesetup.dart';
 import 'package:fierbase/View/spelshScreen.dart';
 import 'package:fierbase/View/seller/testLogin.dart';
 import 'package:fierbase/View/seller/testsignup.dart';
+import 'package:fierbase/View/userorseller.dart';
 import 'package:fierbase/firestore/firestore%20controller.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,7 @@ void main() async {
       Sizer(
         builder: (context, orientation, devicetype) => GetMaterialApp(
           debugShowCheckedModeBanner: false,
-
+          initialRoute: 'userorseller',
           routes: {
             '/': (context) => spelshScreen(),
             'homeScreen': (context) => homeScreen(),
@@ -44,12 +45,13 @@ void main() async {
             'signup': (context) => signupscreen(),
             'intro': (context) => interoScreen(),
             'seller': (context) => Seller(),
-            'uprofile' : (context) => userprofile(),
-            'search' : (context) => SearchPage(),
-            'pagehomescreen' : (context) => pagehome(),
-            'edit' : (context) => editproduct(),
-            'editupdatepage' :(context) => editupdate(),
-            'adminaccountpage' :(context) => Adminaccountpage(),
+            'uprofile': (context) => userprofile(),
+            'search': (context) => SearchPage(),
+            'pagehomescreen': (context) => pagehome(),
+            'edit': (context) => editproduct(),
+            'editupdatepage': (context) => editupdate(),
+            'adminaccountpage': (context) => Adminaccountpage(),
+            'userorseller': (context) => Userorseller(),
           },
         ),
       ),

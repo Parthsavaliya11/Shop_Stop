@@ -6,12 +6,15 @@ import 'package:fierbase/Controller/addproductcontroller.dart';
 import 'package:fierbase/Controller/editupdatecontroller.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 import 'package:sn_progress_dialog/sn_progress_dialog.dart';
 import 'package:uuid/uuid.dart';
 
+import '../Controller/editprofilecontroller.dart';
 import '../Controller/userprofile.dart';
+import '../View/seller/homeScreen.dart';
 
 class cloudStorageHelper {
   cloudStorageHelper._();
@@ -75,10 +78,9 @@ class cloudStorageHelper {
 
   Future<String?> updateimg(
       BuildContext context, String refurl, File updateimg) async {
-      ProgressDialog pd = ProgressDialog(context: context);
-    uploadTask = FirebaseStorage.instance
-        .refFromURL("$refurl")
-        .putFile(updateimg);
+    ProgressDialog pd = ProgressDialog(context: context);
+    uploadTask =
+        FirebaseStorage.instance.refFromURL("$refurl").putFile(updateimg);
 
     //// get indicator values live
     streamSubscription = uploadTask!.snapshotEvents.listen((event) {
@@ -86,9 +88,9 @@ class cloudStorageHelper {
           event.bytesTransferred / event.totalBytes * 100;
 
       pd.show(
-          completed: Completed(
-              completedMsg: "Downloading Done !"),
-          max: 100,closeWithDelay: 100,
+          completed: Completed(completedMsg: "Downloading Done !"),
+          max: 100,
+          closeWithDelay: 100,
           progressType: ProgressType.valuable,
           msg: "Uploading",
           valueColor: Colors.blue,
@@ -98,13 +100,30 @@ class cloudStorageHelper {
       pd.update(value: Editupdatecontroller.editupdate.indicatorvalue!.toInt());
     });
 
+    pd.close(delay: 0);
 
-     pd.close(delay: 0);
-
-      TaskSnapshot taskSnapshot = await uploadTask!;
+    TaskSnapshot taskSnapshot = await uploadTask!;
     downloadurl = await taskSnapshot.ref.getDownloadURL();
     streamSubscription!.cancel();
 
     return downloadurl;
+  }
+
+  void Updateprofileimg(
+      String refurl, String updateimg, BuildContext context) async {
+
+    uploadTask = FirebaseStorage.instance.refFromURL("$refurl").putFile(
+          File("$updateimg"),
+        );
+    streamSubscription = await uploadTask!.snapshotEvents.listen((event) {
+      Editprofile.editprofile.sindicator.value =
+          event.bytesTransferred / event.totalBytes * 100;
+
+
+    });
+    TaskSnapshot? taskSnapshot = await uploadTask;
+    downloadurl = await taskSnapshot!.ref.getDownloadURL();
+    streamSubscription!.cancel();
+    Get.offAll(homeScreen());
   }
 }

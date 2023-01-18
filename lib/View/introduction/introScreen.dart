@@ -136,9 +136,8 @@ class _interoScreenState extends State<interoScreen> {
                                 if (IntroController
                                         .introcontrol.pagecount.value ==
                                     2) {
-                                  spleashController.spleash.introcontroller.write("key", "true");
-
-
+                                  spleashController.spleash.introcontroller
+                                      .write("key", "true");
 
                                   Get.offAll(loginscreen(),
                                       transition: Transition.leftToRight);

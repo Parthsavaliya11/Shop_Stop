@@ -35,6 +35,7 @@ class _homeScreenState extends State<homeScreen> {
     super.initState();
     firebasenoti();
     getsignin();
+
   }
 
   @override
