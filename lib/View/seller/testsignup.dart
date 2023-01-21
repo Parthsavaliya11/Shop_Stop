@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:fierbase/View/seller/testLogin.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +23,12 @@ class signupscreen extends StatefulWidget {
 }
 
 class _signupscreenState extends State<signupscreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -46,11 +54,13 @@ class _signupscreenState extends State<signupscreen> {
                         child: Image.asset("assets/images/shopstopblue.png"),
                       ),
                     ),
-                    txtfield("Invalid", "Enter The Email", Icons.person,getsign.txt_mailUp),
+                    txtfield("Invalid", "Enter The Email", Icons.person,
+                        getsign.txt_mailUp),
                     SizedBox(
                       height: 5.h,
                     ),
-                    txtfield("Invalid", "Enter The Password", Icons.lock,getsign.txt_passwordUp),
+                    txtfield("Invalid", "Enter The Password", Icons.lock,
+                        getsign.txt_passwordUp),
                     SizedBox(
                       height: 7.h,
                     ),
@@ -136,7 +146,7 @@ class _signupscreenState extends State<signupscreen> {
                       color: Colors.blueAccent,
                       fontWeight: FontWeight.w600)),
               onPressed: () {
-               Get.offAll(loginscreen(),transition: Transition.rightToLeft);
+                Get.offAll(loginscreen(), transition: Transition.rightToLeft);
               },
             ),
           ],

@@ -1,6 +1,6 @@
-import 'package:fierbase/Controller/editupdatecontroller.dart';
 import 'package:fierbase/Controller/local_notification.dart';
 import 'package:fierbase/Controller/signController.dart';
+import 'package:fierbase/View/Customer/userhome.dart';
 import 'package:fierbase/View/pagehomescreen.dart';
 import 'package:fierbase/View/seller/addproductpage.dart';
 import 'package:fierbase/View/seller/adminaccountpage.dart';
@@ -36,7 +36,7 @@ void main() async {
       Sizer(
         builder: (context, orientation, devicetype) => GetMaterialApp(
           debugShowCheckedModeBanner: false,
-          initialRoute: 'userorseller',
+
           routes: {
             '/': (context) => spelshScreen(),
             'homeScreen': (context) => homeScreen(),
@@ -52,6 +52,7 @@ void main() async {
             'editupdatepage': (context) => editupdate(),
             'adminaccountpage': (context) => Adminaccountpage(),
             'userorseller': (context) => Userorseller(),
+            'userhome': (context) => Userhome(),
           },
         ),
       ),

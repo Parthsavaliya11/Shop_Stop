@@ -1,7 +1,6 @@
 import 'dart:developer';
-
 import 'package:fierbase/Controller/spleshController.dart';
-import 'package:fierbase/View/seller/testLogin.dart';
+import 'package:fierbase/View/userorseller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -139,7 +138,7 @@ class _interoScreenState extends State<interoScreen> {
                                   spleashController.spleash.introcontroller
                                       .write("key", "true");
 
-                                  Get.offAll(loginscreen(),
+                                  Get.offAll(Userorseller(),
                                       transition: Transition.leftToRight);
                                 }
                               }),

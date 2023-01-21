@@ -43,7 +43,7 @@ dependencies:
   progress_indicators: ^1.0.0
   google_sign_in: ^5.4.2
   dotted_border: ^2.0.0+3
-  palette_generator: ^0.3.3+2
+  carousel_slider: ^4.2.1
   readmore: ^2.2.0
   sn_progress_dialog: ^1.0.9
   rive: ^0.10.1

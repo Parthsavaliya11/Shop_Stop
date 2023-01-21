@@ -67,13 +67,17 @@ class _spelshScreenState extends State<spelshScreen> {
     // check == true
     //     ? await Get.offNamed('homeScreen')
     //     : await Get.offNamed('intro');
+    GetStorage getStorage = GetStorage();
+
+    // this is a check user login is userlogin or seller login
+    String? key = getStorage.read("U");
 
     check == true
         ? (k == "true"
-            ? await Get.offNamed('homeScreen')
+            ? await Get.offNamed(key == "seller" ? 'homeScreen' : "userhome")
             : await Get.offNamed('intro'))
         : k == "true"
-            ? await Get.offNamed('login')
+            ? await Get.offNamed('userorseller')
             : await Get.offNamed('intro');
   }
 }

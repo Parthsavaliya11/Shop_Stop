@@ -9,6 +9,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';
@@ -213,8 +214,17 @@ class _userprofileState extends State<userprofile> {
                                                       "${FirebaseAuth.instance.currentUser!.uid}",
                                                       Profilecontroller.cont
                                                           .txt_umobile.text);
+                                                  GetStorage g1 = GetStorage();
+                                                  String key = g1.read("U");
+                                                  Future.delayed(
+                                                    Duration(seconds: 2),
+                                                        () {
+                                                      key == "user"
+                                                          ? Get.offAllNamed('userhome')
+                                                          : Get.offAllNamed('homeScreen');
+                                                    },
+                                                  );
 
-                                                  Get.offAll(homeScreen());
                                                 } else {
                                                   ScaffoldMessenger.of(context)
                                                       .showSnackBar(

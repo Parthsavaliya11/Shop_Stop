@@ -152,7 +152,7 @@ void updatedocFirestore(String productName, String productPrice, String dis,
   });
 }
 
-void editProfile(String name, String mobile,String docid) {
+void editProfile(String name, String mobile, String docid) {
   FirebaseFirestore.instance
       .collection("user")
       .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -162,4 +162,8 @@ void editProfile(String name, String mobile,String docid) {
     "username": name,
     "mobile": mobile,
   });
+}
+
+Stream<QuerySnapshot<Map<String, dynamic>>> alldataread() {
+  return FirebaseFirestore.instance.collection("Product").snapshots();
 }
