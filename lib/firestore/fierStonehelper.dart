@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fierbase/Controller/userhomecontroller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
@@ -166,4 +167,12 @@ void editProfile(String name, String mobile, String docid) {
 
 Stream<QuerySnapshot<Map<String, dynamic>>> alldataread() {
   return FirebaseFirestore.instance.collectionGroup("data").snapshots();
+}
+
+Stream<QuerySnapshot<Map<String, dynamic>>> Usercategorywise() {
+  return FirebaseFirestore.instance
+      .collectionGroup("data")
+      .where("category",
+          isEqualTo: Uhomecontroller.uhomecontroller.category.value)
+      .snapshots();
 }

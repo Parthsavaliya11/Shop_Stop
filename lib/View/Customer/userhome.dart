@@ -40,27 +40,53 @@ class _UserhomeState extends State<Userhome> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          toolbarHeight: 10.h,
-          iconTheme: IconThemeData(color: Colors.black),
-          centerTitle: true,
-          title: SizedBox(
-            height: 13.h,
-            width: 13.h,
-            child: Image.asset("assets/images/shopstopblue.png"),
-          ),
-          backgroundColor: Colors.white,
-          elevation: 0,
-          actions: [
-            Padding(
-              padding: EdgeInsets.only(right: 2.w),
-              child: IconButton(
-                iconSize: 25,
-                onPressed: alldataread,
-                icon: Icon(Icons.search),
+        body: NestedScrollView(
+          floatHeaderSlivers: true,
+          headerSliverBuilder: (context, innerBoxScrooled) {
+            return [
+              SliverAppBar(
+                snap: true,
+                actions: [
+                  Padding(
+                    padding: EdgeInsets.only(right: 2.w),
+                    child: IconButton(
+                      iconSize: 25,
+                      onPressed: alldataread,
+                      icon: Icon(Icons.search),
+                    ),
+                  ),
+                ],
+                toolbarHeight: 10.h,
+                iconTheme: IconThemeData(color: Colors.black),
+                centerTitle: true,
+                elevation: 0,
+                backgroundColor: Colors.white,
+                floating: true,
+                title: SizedBox(
+                  height: 13.h,
+                  width: 13.h,
+                  child: Image.asset("assets/images/shopstopblue.png"),
+                ),
               ),
-            ),
-          ],
+            ];
+          },
+          body: Column(
+            children: [
+              Expanded(
+                child: PageView(
+                  onPageChanged: (index) {},
+                  physics: NeverScrollableScrollPhysics(),
+                  controller: Uhomecontroller.uhomecontroller.Uhometabcont,
+                  children: [
+                    Userhomewithoutbar(),
+                    Userhomewithoutbar(),
+                    Userhomewithoutbar(),
+                    Userhomewithoutbar(),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
         drawer: Drawer(
           child: Column(
@@ -202,9 +228,7 @@ class _UserhomeState extends State<Userhome> {
                 ),
               ),
               GestureDetector(
-                onTap: () {
-
-                },
+                onTap: () {},
                 child: ListTile(
                   leading: Icon(
                     Icons.edit_note_rounded,
@@ -238,23 +262,6 @@ class _UserhomeState extends State<Userhome> {
               ),
             ],
           ),
-        ),
-        body: Column(
-          children: [
-            Expanded(
-              child: PageView(
-                onPageChanged: (index) {},
-                physics: NeverScrollableScrollPhysics(),
-                controller: Uhomecontroller.uhomecontroller.Uhometabcont,
-                children: [
-                  Userhomewithoutbar(),
-                  Userhomewithoutbar(),
-                  Userhomewithoutbar(),
-                  Userhomewithoutbar(),
-                ],
-              ),
-            ),
-          ],
         ),
         bottomNavigationBar: GNav(
           selectedIndex: Uhomecontroller.uhomecontroller.tabindex.value,

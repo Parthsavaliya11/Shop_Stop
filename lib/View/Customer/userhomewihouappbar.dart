@@ -69,8 +69,7 @@ class _UserhomewithoutbarState extends State<Userhomewithoutbar> {
                     ),
                     TextButton(
                       onPressed: () {
-                        Uhomecontroller.uhomecontroller.category.value =
-                            "";
+                        Uhomecontroller.uhomecontroller.category.value = "";
                       },
                       child: Text(
                         "Clear Filter",
@@ -96,7 +95,7 @@ class _UserhomewithoutbarState extends State<Userhomewithoutbar> {
                                   Uhomecontroller
                                       .uhomecontroller.ctegorylistnames[e.key];
 
-                              log("${SearchPageController.searchcontroller.category.value}");
+                              log("${Uhomecontroller.uhomecontroller.category.value}");
                             },
                             child: Ink(
                               height: 10.h,
@@ -139,19 +138,17 @@ class _UserhomewithoutbarState extends State<Userhomewithoutbar> {
               ),
               Obx(
                 () => StreamBuilder(
-                  stream: Uhomecontroller.uhomecontroller.category.value == ''
-                      ?  alldataread()
-                      : categorywise(),
+                  stream: Uhomecontroller.uhomecontroller.category.value == ""
+                      ? alldataread()
+                      : Usercategorywise(),
                   builder: (BuildContext context, snapshot) {
                     if (snapshot.hasError) {
                       Text("${snapshot.error}");
                     } else if (snapshot.hasData) {
-                      Uhomecontroller.uhomecontroller.allfinal.value.clear();
-
+                      Uhomecontroller.uhomecontroller.allfinal.clear();
                       var storedata = snapshot.data!;
 
                       for (var z in storedata.docs) {
-                        
                         Map finaldata = z.data() as Map<String, dynamic>;
                         String proname = finaldata['productname'];
                         String proprice = finaldata['productprice'];
@@ -167,7 +164,9 @@ class _UserhomewithoutbarState extends State<Userhomewithoutbar> {
                         );
                         Uhomecontroller.uhomecontroller.allfinal.value.add(f);
                       }
-                      return Uhomecontroller.uhomecontroller.allfinal.length == 0
+
+                      return Uhomecontroller.uhomecontroller.allfinal.length ==
+                              0
                           ? Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -182,49 +181,32 @@ class _UserhomewithoutbarState extends State<Userhomewithoutbar> {
                               ],
                             )
                           : SingleChildScrollView(
-                            child: StaggeredGrid.count(
+                              child: StaggeredGrid.count(
                                 crossAxisCount: 2,
                                 children: Uhomecontroller
-                                    .uhomecontroller.allfinal.value
+                                    .uhomecontroller.allfinal
                                     .map(
                                       (index) => Padding(
                                         padding: EdgeInsets.all(1.h),
                                         child: GestureDetector(
-                                          onTap: () {
-// ProductDetailCont.detailcontroller
-//         .productdetailmodel =
-//     Productdetailmodel(
-//         productname:
-//             index.productname,
-//         productprice:
-//             index.productprice,
-//         discription:
-//             index.productdes,
-//         imgurl: index.prodocimg,
-//         category: index.category,
-//         docid: index.docid);
-// Get.to(editproduct(),
-//     transition:
-//         Transition.cupertino);
-                                          },
+                                          onTap: () {},
                                           child: Container(
                                             height: 35.h,
                                             width: 10.h,
                                             decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    width: 0.2,
-                                                    color: Colors.grey),
-                                                color: Colors.white,
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        17),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                      color: Colors
-                                                          .grey.shade200,
-                                                      blurRadius: 10,
-                                                      offset: Offset(0, 5))
-                                                ]),
+                                              border: Border.all(
+                                                  width: 0.2,
+                                                  color: Colors.grey),
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(17),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                    color: Colors.grey.shade200,
+                                                    blurRadius: 10,
+                                                    offset: Offset(0, 5))
+                                              ],
+                                            ),
                                             child: Padding(
                                               padding: EdgeInsets.all(2.w),
                                               child: Column(
@@ -237,8 +219,8 @@ class _UserhomewithoutbarState extends State<Userhomewithoutbar> {
                                                     width: double.infinity,
                                                     child: ClipRRect(
                                                       borderRadius:
-                                                          BorderRadius
-                                                              .circular(10),
+                                                          BorderRadius.circular(
+                                                              10),
                                                       child: Image.network(
                                                           fit: BoxFit.cover,
                                                           "${index.prodocimg}"),
@@ -250,16 +232,16 @@ class _UserhomewithoutbarState extends State<Userhomewithoutbar> {
                                                         height: 4.h,
                                                         width: 40.w,
                                                         child: Text(
-                                                          overflow:
-                                                              TextOverflow
-                                                                  .ellipsis,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
                                                           "${index.productname}",
-                                                          style: GoogleFonts.poppins(
-                                                              fontSize:
-                                                                  14.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600),
+                                                          style: GoogleFonts
+                                                              .poppins(
+                                                                  fontSize:
+                                                                      14.sp,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600),
                                                         ),
                                                       ),
                                                     ],
@@ -271,15 +253,15 @@ class _UserhomewithoutbarState extends State<Userhomewithoutbar> {
                                                     children: [
                                                       Text(
                                                         "${index.productprice} \$",
-                                                        style: GoogleFonts
-                                                            .poppins(
+                                                        style:
+                                                            GoogleFonts.poppins(
                                                                 fontSize:
                                                                     14.sp),
                                                       ),
                                                       Text(
                                                         "${index.category}",
-                                                        style: GoogleFonts
-                                                            .poppins(
+                                                        style:
+                                                            GoogleFonts.poppins(
                                                                 color: Colors
                                                                     .black),
                                                       )
@@ -292,8 +274,9 @@ class _UserhomewithoutbarState extends State<Userhomewithoutbar> {
                                         ),
                                       ),
                                     )
-                                    .toList()),
-                          );
+                                    .toList(),
+                              ),
+                            );
                     }
                     return Center(
                       child: SizedBox(
