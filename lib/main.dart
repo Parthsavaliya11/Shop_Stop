@@ -20,23 +20,26 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:sizer/sizer.dart';
 
+import 'Controller/conmanagerbinding.dart';
 import 'View/seller/editproductpage.dart';
 import 'View/seller/searchpage.dart';
 
 signController getsign = Get.put(signController());
 firestoreget getstore = Get.put(firestoreget());
 localnotificatio getlocal = Get.put(localnotificatio());
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp();
   await GetStorage.init();
   {
     runApp(
       Sizer(
         builder: (context, orientation, devicetype) => GetMaterialApp(
+          initialBinding: ControllerBinding(),
           debugShowCheckedModeBanner: false,
-
           routes: {
             '/': (context) => spelshScreen(),
             'homeScreen': (context) => homeScreen(),

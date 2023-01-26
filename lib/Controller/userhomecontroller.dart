@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:fierbase/model/Uhomemodel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +11,7 @@ class Uhomecontroller extends GetxController {
   RxList<Uhomemodel> allfinal = <Uhomemodel>[].obs;
   RxInt tabindex = 0.obs;
   PageController Uhometabcont = PageController();
+
   List ctegorylist = [
     "assets/images/fashion.png",
     "assets/images/electric.png",
@@ -25,4 +28,7 @@ class Uhomecontroller extends GetxController {
   ];
   List ctegorylistnames = ["Fashion", "Electric", "LifeStyle", "Kitchen"];
   RxString category = "".obs;
+
+  RxBool isconnected = false.obs;
+  RxBool isalert = false.obs;
 }

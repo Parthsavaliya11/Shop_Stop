@@ -7,11 +7,9 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
-
-import '../../Controller/searchpagecontroller.dart';
+import 'package:transparent_image/transparent_image.dart';
 import '../../Controller/userhomecontroller.dart';
 import '../../firestore/fierStonehelper.dart';
-import '../../main.dart';
 
 class Userhomewithoutbar extends StatefulWidget {
   const Userhomewithoutbar({Key? key}) : super(key: key);
@@ -221,9 +219,13 @@ class _UserhomewithoutbarState extends State<Userhomewithoutbar> {
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               10),
-                                                      child: Image.network(
-                                                          fit: BoxFit.cover,
-                                                          "${index.prodocimg}"),
+                                                      child: FadeInImage.memoryNetwork(
+                                                        placeholder: kTransparentImage,
+                                                        fit: BoxFit.cover,
+                                                        imageCacheHeight: 1000, //adding these two parameters
+                                                        imageCacheWidth: 1000,
+                                                        image: "${index.prodocimg}",
+                                                      )
                                                     ),
                                                   ),
                                                   Row(
