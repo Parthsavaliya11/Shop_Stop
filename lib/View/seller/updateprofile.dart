@@ -8,11 +8,14 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';
 import '../../Controller/editprofilecontroller.dart';
 import '../../Controller/homeScreenController.dart';
+import '../../Controller/userhomecontroller.dart';
+import '../Customer/userhome.dart';
 import 'homeScreen.dart';
 
 class Updateprofile extends StatefulWidget {
@@ -213,42 +216,66 @@ class _UpdateprofileState extends State<Updateprofile> {
                                             "Submit",
                                             style: GoogleFonts.poppins(),
                                           ),
-                                    onPressed:  Editprofile
-                                        .editprofile.isprocess.value ? null:() async {
-                                      Editprofile.editprofile.isprocess.value =
-                                          true;
-                                      if (Editprofile
-                                              .editprofile.profileimg.value !=
-                                          '') {
-                                        editProfile(
-                                            Editprofile
-                                                .editprofile.Utxt_uname.text,
-                                            Editprofile
-                                                .editprofile.Utxt_umobile.text,
-                                            Editprofile.editprofile
-                                                .editprofilemodel!.docid!);
-                                        HomeScreenController
-                                            .homeController.tabindex.value = 0;
-                                        cloudStorageHelper.storageHelp
-                                            .Updateprofileimg(
+                                    onPressed:
+                                        Editprofile.editprofile.isprocess.value
+                                            ? null
+                                            : () async {
                                                 Editprofile.editprofile
-                                                    .editprofilemodel!.refurl!,
-                                                Editprofile.editprofile
-                                                    .profileimg.value,
-                                                context);
-                                      } else {
-                                        editProfile(
-                                            Editprofile
-                                                .editprofile.Utxt_uname.text,
-                                            Editprofile
-                                                .editprofile.Utxt_umobile.text,
-                                            Editprofile.editprofile
-                                                .editprofilemodel!.docid!);
-                                        HomeScreenController
-                                            .homeController.tabindex.value = 0;
-                                        Get.offAll(homeScreen());
-                                      }
-                                    }),
+                                                    .isprocess.value = true;
+                                                if (Editprofile.editprofile
+                                                        .profileimg.value !=
+                                                    '') {
+                                                  editProfile(
+                                                      Editprofile.editprofile
+                                                          .Utxt_uname.text,
+                                                      Editprofile.editprofile
+                                                          .Utxt_umobile.text,
+                                                      Editprofile
+                                                          .editprofile
+                                                          .editprofilemodel!
+                                                          .docid!);
+                                                  HomeScreenController
+                                                      .homeController
+                                                      .tabindex
+                                                      .value = 0;
+                                                  cloudStorageHelper.storageHelp
+                                                      .Updateprofileimg(
+                                                          Editprofile
+                                                              .editprofile
+                                                              .editprofilemodel!
+                                                              .refurl!,
+                                                          Editprofile
+                                                              .editprofile
+                                                              .profileimg
+                                                              .value,
+                                                          context);
+                                                } else {
+                                                  editProfile(
+                                                      Editprofile.editprofile
+                                                          .Utxt_uname.text,
+                                                      Editprofile.editprofile
+                                                          .Utxt_umobile.text,
+                                                      Editprofile
+                                                          .editprofile
+                                                          .editprofilemodel!
+                                                          .docid!);
+                                                  HomeScreenController
+                                                      .homeController
+                                                      .tabindex
+                                                      .value = 0;
+                                                  GetStorage get = GetStorage();
+                                                  String user = get.read("U");
+                                                  Uhomecontroller
+                                                      .uhomecontroller
+                                                      .tabindex
+                                                      .value = 0;
+                                                  Get.offAll(
+                                                    user == "user"
+                                                        ? Userhome()
+                                                        : homeScreen(),
+                                                  );
+                                                }
+                                              }),
                               ),
                             ),
                           ),

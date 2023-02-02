@@ -33,7 +33,6 @@ class editupdate extends StatefulWidget {
 class _editupdateState extends State<editupdate> {
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     Editupdatecontroller.editupdate.txt_proprice = TextEditingController(
         text: Editupdatecontroller.editupdate.updatemodel.productprice);
@@ -153,7 +152,7 @@ class _editupdateState extends State<editupdate> {
                               .value = selected.toString();
                         },
                         validator: (value) {
-                          if (value == null) {
+                          if (value == "") {
                             return 'Please Select Category';
                           }
                           return null;
@@ -199,7 +198,7 @@ class _editupdateState extends State<editupdate> {
                                 .save();
                             updatedocFirestore(
                                 Editupdatecontroller
-                                    .editupdate.updatemodel.productname!,
+                                    .editupdate.txt_proname.text,
                                 Editupdatecontroller
                                     .editupdate.txt_proprice.text,
                                 Editupdatecontroller

@@ -1,6 +1,8 @@
 import 'dart:developer';
 
+import 'package:badges/badges.dart' as b;
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fierbase/View/Customer/cartScreen.dart';
 import 'package:fierbase/View/Customer/userhomewihouappbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +17,11 @@ import '../../Controller/userhomecontroller.dart';
 import '../../Controller/userprofile.dart';
 import '../../firestore/fierStonehelper.dart';
 import '../../main.dart';
+import '../seller/adminaccountpage.dart';
 import '../userorseller.dart';
+import 'favScreen.dart';
+
+ScrollController scrollController = ScrollController();
 
 class Userhome extends StatefulWidget {
   const Userhome({Key? key}) : super(key: key);
@@ -31,11 +37,6 @@ class _UserhomeState extends State<Userhome> {
     HomeScreenController.homeController.authmethod =
         HomeScreenController.homeController.authseprate.read("auth");
     log("${HomeScreenController.homeController.authmethod} ccccccccccccccccc");
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
   }
 
   @override
@@ -94,9 +95,9 @@ class _UserhomeState extends State<Userhome> {
                               Uhomecontroller.uhomecontroller.Uhometabcont,
                           children: [
                             Userhomewithoutbar(),
-                            Userhomewithoutbar(),
-                            Userhomewithoutbar(),
-                            Userhomewithoutbar(),
+                            favScreen(),
+                            CartScreen(),
+                            Adminaccountpage(),
                           ],
                         ),
                       ),
@@ -327,8 +328,34 @@ class _UserhomeState extends State<Userhome> {
                       text: "Fav",
                     ),
                     GButton(
-                      icon: Icons.shopping_cart,
-                      text: "Cart",
+                      icon: Icons.cabin,
+                      leading: b.Badge(
+                        badgeStyle: b.BadgeStyle(
+                            elevation: 0,
+                            badgeColor: Uhomecontroller
+                                        .uhomecontroller.tabindex.value ==
+                                    2
+                                ? Colors.white
+                                : Colors.blueAccent),
+                        badgeContent: Text(
+                          '3',
+                          style: GoogleFonts.poppins(
+                              color: Uhomecontroller
+                                          .uhomecontroller.tabindex.value ==
+                                      2
+                                  ? Colors.black
+                                  : Colors.white),
+                        ),
+                        child: Icon(
+                          Icons.shopping_cart,
+                          color:
+                              Uhomecontroller.uhomecontroller.tabindex.value ==
+                                      2
+                                  ? Colors.white
+                                  : Colors.grey,
+                        ),
+                      ),
+                      text: "    Cart",
                     ),
                     GButton(
                       icon: Icons.person,

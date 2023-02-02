@@ -1,11 +1,13 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fierbase/Controller/cartcontroller.dart';
 import 'package:fierbase/Controller/userhomecontroller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
 import '../Controller/searchpagecontroller.dart';
+import '../Controller/uproDetailcontroller.dart';
 
 // create userprofile
 void createfirestore(
@@ -174,5 +176,74 @@ Stream<QuerySnapshot<Map<String, dynamic>>> Usercategorywise() {
       .collectionGroup("data")
       .where("category",
           isEqualTo: Uhomecontroller.uhomecontroller.category.value)
+      .snapshots();
+}
+
+Stream<QuerySnapshot<Map<String, dynamic>>> usercart() {
+  return FirebaseFirestore.instance
+      .collection("Cart")
+      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .collection("usercart")
+      .snapshots();
+}
+
+Future<bool?> exits(String docid) async {
+  bool exists;
+  DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
+      await FirebaseFirestore.instance
+          .collection("Cart")
+          .doc("${FirebaseAuth.instance.currentUser!.uid}")
+          .collection("usercart")
+          .doc(docid)
+          .get();
+
+  if (documentSnapshot.exists) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+void addFav() {
+  FirebaseFirestore.instance
+      .collection("Fav")
+      .doc("${FirebaseAuth.instance.currentUser!.uid}")
+      .collection("Fav")
+      .doc("${Userprodetailcont.uprodetailcont.uproductdetail.docid}")
+      .set({
+    "productname":
+        "${Userprodetailcont.uprodetailcont.uproductdetail.productname}",
+    "productprice":
+        "${Userprodetailcont.uprodetailcont.uproductdetail.productprice}",
+    "description":
+        "${Userprodetailcont.uprodetailcont.uproductdetail.discription}",
+    "userid": "${FirebaseAuth.instance.currentUser!.uid}",
+    "imageurl": "${Userprodetailcont.uprodetailcont.uproductdetail.imgurl}",
+    "category": "${Userprodetailcont.uprodetailcont.uproductdetail.category}",
+    "docid": "${Userprodetailcont.uprodetailcont.uproductdetail.docid}",
+  });
+}
+Future<bool?> Favexits(String docid) async {
+  bool exists;
+  DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
+  await FirebaseFirestore.instance
+      .collection("Fav")
+      .doc("${FirebaseAuth.instance.currentUser!.uid}")
+      .collection("Fav")
+      .doc(docid)
+      .get();
+
+  if (documentSnapshot.exists) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+Stream<QuerySnapshot<Map<String, dynamic>>> readfav() {
+  return FirebaseFirestore.instance
+      .collection("Fav")
+      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .collection("Fav")
       .snapshots();
 }

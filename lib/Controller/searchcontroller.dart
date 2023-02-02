@@ -1,5 +1,4 @@
 import 'package:fierbase/firestore/firestore%20controller.dart';
-import 'package:fierbase/main.dart';
 import 'package:get/get.dart';
 
 class searchsystem extends GetxController {
@@ -10,8 +9,9 @@ class searchsystem extends GetxController {
   static final searchhelper = searchsystem._();
 
   void search(String query, List<fstoremodel> s) {
-    getstore.allfinal.value = s;
-    tempsearch = getstore.allfinal;
+
+    firestoreget.Firestoreget.allfinal.value = s;
+    tempsearch =  firestoreget.Firestoreget.allfinal;
 
     if (query.isNotEmpty) {
       List<fstoremodel> filtersearchdata = [];
@@ -20,9 +20,9 @@ class searchsystem extends GetxController {
           filtersearchdata.add(search);
         }
       }
-      getstore.allfinal.value = filtersearchdata;
+      firestoreget.Firestoreget.allfinal.value = filtersearchdata;
     } else {
-      getstore.allfinal.value = s;
+      firestoreget.Firestoreget.allfinal.value = s;
     }
   }
 }

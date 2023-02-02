@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:fierbase/View/seller/testLogin.dart';
+import 'package:fierbase/firestore/firestore%20controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
@@ -12,8 +13,10 @@ import 'package:sign_in_button/sign_in_button.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../main.dart';
+import '../Customer/userhome.dart';
 import '../componets/buttons.dart';
 import '../componets/txtfields.dart';
+import 'homeScreen.dart';
 
 class signupscreen extends StatefulWidget {
   const signupscreen({Key? key}) : super(key: key);
@@ -35,7 +38,7 @@ class _signupscreenState extends State<signupscreen> {
       child: Scaffold(
         backgroundColor: Colors.grey.shade100,
         body: Form(
-          key: getstore.signupsky,
+          key: firestoreget.Firestoreget.signupsky,
           child: Container(
             height: 100.h,
             width: 100.w,
@@ -92,9 +95,16 @@ class _signupscreenState extends State<signupscreen> {
                                 Get.snackbar("Shop Stop", "Invalid Entry");
                               } else {
                                 GetStorage g1 = GetStorage();
-
+                                var userorseller = g1.read("U");
                                 g1.write("auth", 'google');
-                                Get.offAllNamed('homeScreen');
+
+                                userorseller == "user"
+                                    ? await Get.to(
+                                        Userhome(),
+                                      )
+                                    : await Get.to(
+                                        homeScreen(),
+                                      );
                               }
                             },
                             child: SizedBox(

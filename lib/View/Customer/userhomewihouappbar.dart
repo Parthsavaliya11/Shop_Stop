@@ -1,13 +1,18 @@
 import 'dart:developer';
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:fierbase/View/Customer/cproductdetail.dart';
 import 'package:fierbase/model/Uhomemodel.dart';
+import 'package:fierbase/model/cProdetailModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 import 'package:transparent_image/transparent_image.dart';
+import '../../Controller/FavController.dart';
+import '../../Controller/productdetailcontroller.dart';
+import '../../Controller/uproDetailcontroller.dart';
 import '../../Controller/userhomecontroller.dart';
 import '../../firestore/fierStonehelper.dart';
 
@@ -148,18 +153,19 @@ class _UserhomewithoutbarState extends State<Userhomewithoutbar> {
 
                       for (var z in storedata.docs) {
                         Map finaldata = z.data() as Map<String, dynamic>;
+                        String docid = z.id;
                         String proname = finaldata['productname'];
                         String proprice = finaldata['productprice'];
                         String prodisc = finaldata['description'];
                         String imglink = finaldata['imageurl'];
                         String category = finaldata['category'];
                         Uhomemodel f = Uhomemodel(
-                          productname: proname,
-                          productprice: proprice,
-                          productdes: prodisc,
-                          prodocimg: imglink,
-                          category: category,
-                        );
+                            productname: proname,
+                            productprice: proprice,
+                            productdes: prodisc,
+                            prodocimg: imglink,
+                            category: category,
+                            docid: docid);
                         Uhomecontroller.uhomecontroller.allfinal.value.add(f);
                       }
 
@@ -187,7 +193,25 @@ class _UserhomewithoutbarState extends State<Userhomewithoutbar> {
                                       (index) => Padding(
                                         padding: EdgeInsets.all(1.h),
                                         child: GestureDetector(
-                                          onTap: () {},
+                                          onTap: () async {
+                                            Userprodetailcont.uprodetailcont
+                                                    .uproductdetail =
+                                                Uproductdetail(
+                                                    productname:
+                                                        index.productname,
+                                                    productprice:
+                                                        index.productprice,
+                                                    discription:
+                                                        index.productdes,
+                                                    imgurl: index.prodocimg,
+                                                    category: index.category,
+                                                    docid: index.docid);
+                                            Favcontroller.Favcont.e = (await Favexits(
+                                            "${Userprodetailcont.uprodetailcont.uproductdetail.docid}"))!;
+                                            Get.to(Cproductdetail(),
+                                                transition:
+                                                    Transition.cupertino);
+                                          },
                                           child: Container(
                                             height: 35.h,
                                             width: 10.h,
@@ -216,17 +240,21 @@ class _UserhomewithoutbarState extends State<Userhomewithoutbar> {
                                                     height: 20.h,
                                                     width: double.infinity,
                                                     child: ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      child: FadeInImage.memoryNetwork(
-                                                        placeholder: kTransparentImage,
-                                                        fit: BoxFit.cover,
-                                                        imageCacheHeight: 1000, //adding these two parameters
-                                                        imageCacheWidth: 1000,
-                                                        image: "${index.prodocimg}",
-                                                      )
-                                                    ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                        child: FadeInImage
+                                                            .memoryNetwork(
+                                                          placeholder:
+                                                              kTransparentImage,
+                                                          fit: BoxFit.cover,
+                                                          imageCacheHeight:
+                                                              1000,
+                                                          //adding these two parameters
+                                                          imageCacheWidth: 1000,
+                                                          image:
+                                                              "${index.prodocimg}",
+                                                        )),
                                                   ),
                                                   Row(
                                                     children: [

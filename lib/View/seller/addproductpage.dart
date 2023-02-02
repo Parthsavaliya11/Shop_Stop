@@ -5,11 +5,13 @@ import 'package:fierbase/Controller/addproductcontroller.dart';
 import 'package:fierbase/Storage/storage.dart';
 import 'package:fierbase/View/componets/txtfields.dart';
 import 'package:fierbase/firestore/fierStonehelper.dart';
+import 'package:fierbase/firestore/firestore%20controller.dart';
 import 'package:fierbase/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
@@ -27,9 +29,9 @@ class _addproductState extends State<addproduct> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        getstore.pronamee.clear();
-        getstore.propricee.clear();
-        getstore.prodescription.clear();
+        firestoreget.Firestoreget.pronamee.clear();
+        firestoreget.Firestoreget.propricee.clear();
+        firestoreget.Firestoreget.prodescription.clear();
         addproductcontroller.addpro.productpic = null;
         return await true;
       },
@@ -38,7 +40,7 @@ class _addproductState extends State<addproduct> {
           resizeToAvoidBottomInset: true,
           backgroundColor: Colors.white,
           body: Form(
-            key: getstore.k,
+            key: firestoreget.Firestoreget.k,
             child: Column(
               children: [
                 Expanded(
@@ -64,9 +66,22 @@ class _addproductState extends State<addproduct> {
                               addproductcontroller.addpro.xFile =
                                   await addproductcontroller.addpro.imagePicker
                                       .pickImage(source: ImageSource.gallery);
+
+                              File? croppedimg = await addproductcontroller
+                                  .addpro
+                                  .imagecropper(
+                                file: File(
+                                    "${addproductcontroller.addpro.xFile!.path}"),
+                              );
+
+                              File? compressedimg =
+                                  await addproductcontroller.addpro.compressor(
+                                      file: File("${croppedimg!.path}"));
+
                               setState(() {
-                                addproductcontroller.addpro.productpic = File(
-                                    addproductcontroller.addpro.xFile!.path);
+                                addproductcontroller.addpro.productpic =
+                                    compressedimg;
+
                               });
                             },
                             child: DottedBorder(
@@ -118,19 +133,23 @@ class _addproductState extends State<addproduct> {
                                 color: Colors.blueAccent),
                           ),
                         ),
-                        addtxtfiels(TextInputAction.next, getstore.pronamee,
-                            TextInputType.text, "Product Name", "Enter Name",
+                        addtxtfiels(
+                            TextInputAction.next,
+                            firestoreget.Firestoreget.pronamee,
+                            TextInputType.text,
+                            "Product Name",
+                            "Enter Name",
                             maxline: 25),
                         addtxtfiels(
                             TextInputAction.next,
-                            getstore.propricee,
+                            firestoreget.Firestoreget.propricee,
                             TextInputType.number,
                             "Product Price",
                             "Enter Price",
                             maxline: 5),
                         addtxtfiels(
                             TextInputAction.done,
-                            getstore.prodescription,
+                            firestoreget.Firestoreget.prodescription,
                             TextInputType.text,
                             "Product Description",
                             "Enter Description",
@@ -167,8 +186,12 @@ class _addproductState extends State<addproduct> {
                                           .addpro.productpic !=
                                       null
                                   ? () async {
-                                      if (getstore.k.currentState!.validate()) {
-                                        getstore.k.currentState!.save();
+                                      if (firestoreget
+                                          .Firestoreget.k.currentState!
+                                          .validate()) {
+                                        firestoreget
+                                            .Firestoreget.k.currentState!
+                                            .save();
 
                                         addproductcontroller.addpro.imagepick(
                                             addproductcontroller
@@ -179,9 +202,12 @@ class _addproductState extends State<addproduct> {
                                             await cloudStorageHelper.storageHelp
                                                 .getstorage(context);
                                         userwiefirestore(
-                                            getstore.pronamee.text,
-                                            getstore.propricee.text,
-                                            getstore.prodescription.text,
+                                            firestoreget
+                                                .Firestoreget.pronamee.text,
+                                            firestoreget
+                                                .Firestoreget.propricee.text,
+                                            firestoreget.Firestoreget
+                                                .prodescription.text,
                                             "${getsign.userid.obs}",
                                             "$imageurl",
                                             "${addproductcontroller.addpro.productcategory}");
@@ -189,9 +215,12 @@ class _addproductState extends State<addproduct> {
                                         Get.snackbar("${"ShopStop"}",
                                             "Your Product Lauch Successfully");
                                         Get.offAllNamed('homeScreen');
-                                        getstore.pronamee.clear();
-                                        getstore.propricee.clear();
-                                        getstore.prodescription.clear();
+                                        firestoreget.Firestoreget.pronamee
+                                            .clear();
+                                        firestoreget.Firestoreget.propricee
+                                            .clear();
+                                        firestoreget.Firestoreget.prodescription
+                                            .clear();
                                         addproductcontroller.addpro.productpic =
                                             null;
                                         addproductcontroller

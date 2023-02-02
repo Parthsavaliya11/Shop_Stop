@@ -1,5 +1,6 @@
 import 'package:fierbase/Controller/local_notification.dart';
 import 'package:fierbase/Controller/signController.dart';
+import 'package:fierbase/View/Customer/cartScreen.dart';
 import 'package:fierbase/View/Customer/userhome.dart';
 import 'package:fierbase/View/pagehomescreen.dart';
 import 'package:fierbase/View/seller/addproductpage.dart';
@@ -13,19 +14,17 @@ import 'package:fierbase/View/spelshScreen.dart';
 import 'package:fierbase/View/seller/testLogin.dart';
 import 'package:fierbase/View/seller/testsignup.dart';
 import 'package:fierbase/View/userorseller.dart';
-import 'package:fierbase/firestore/firestore%20controller.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:sizer/sizer.dart';
-
 import 'Controller/conmanagerbinding.dart';
+import 'View/Customer/favScreen.dart';
 import 'View/seller/editproductpage.dart';
 import 'View/seller/searchpage.dart';
 
 signController getsign = Get.put(signController());
-firestoreget getstore = Get.put(firestoreget());
 localnotificatio getlocal = Get.put(localnotificatio());
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -56,6 +55,8 @@ void main() async {
             'adminaccountpage': (context) => Adminaccountpage(),
             'userorseller': (context) => Userorseller(),
             'userhome': (context) => Userhome(),
+            'cartscreen': (context) => CartScreen(),
+            'favScreen': (context) => favScreen(),
           },
         ),
       ),

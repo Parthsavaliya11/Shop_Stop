@@ -120,7 +120,7 @@ class _pagehomeState extends State<pagehome> {
                   if (snapshot.hasError) {
                     Text("${snapshot.error}");
                   } else if (snapshot.hasData) {
-                    getstore.allfinal.clear();
+                    firestoreget.Firestoreget.allfinal.clear();
                     var storedata = snapshot.data!;
 
                     for (var z in storedata.docs) {
@@ -138,9 +138,9 @@ class _pagehomeState extends State<pagehome> {
                           prodocimg: imglink,
                           category: category,
                           docid: docid);
-                      getstore.allfinal.value.add(f);
+                      firestoreget.Firestoreget.allfinal.value.add(f);
                     }
-                    return getstore.allfinal.length == 0
+                    return firestoreget.Firestoreget.allfinal.length == 0
                         ? Expanded(
                             child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -153,14 +153,16 @@ class _pagehomeState extends State<pagehome> {
                           ))
                         : Expanded(
                             child: SingleChildScrollView(
-                              physics: getstore.allfinal.length >= 3
-                                  ? BouncingScrollPhysics(
-                                      parent: AlwaysScrollableScrollPhysics(),
-                                    )
-                                  : NeverScrollableScrollPhysics(),
+                              physics:
+                                  firestoreget.Firestoreget.allfinal.length >= 3
+                                      ? BouncingScrollPhysics(
+                                          parent:
+                                              AlwaysScrollableScrollPhysics(),
+                                        )
+                                      : NeverScrollableScrollPhysics(),
                               child: StaggeredGrid.count(
                                   crossAxisCount: 2,
-                                  children: getstore.allfinal
+                                  children: firestoreget.Firestoreget.allfinal
                                       .map(
                                         (index) => Padding(
                                           padding: EdgeInsets.all(1.h),

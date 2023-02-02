@@ -1,7 +1,9 @@
 import 'dart:developer';
 
+import 'package:fierbase/View/Customer/userhome.dart';
 import 'package:fierbase/View/seller/homeScreen.dart';
 import 'package:fierbase/View/seller/testsignup.dart';
+import 'package:fierbase/firestore/firestore%20controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +48,7 @@ class _loginscreenState extends State<loginscreen> {
         child: Scaffold(
           backgroundColor: Colors.grey.shade100,
           body: Form(
-            key: getstore.loginkey,
+            key: firestoreget.Firestoreget.loginkey,
             child: Container(
               height: 100.h,
               width: 100.w,
@@ -93,21 +95,22 @@ class _loginscreenState extends State<loginscreen> {
                               onPressed: () {},
                               child: SizedBox(
                                 height: 4.h,
-                                child: Image.asset("assets/images/facebook.png"),
+                                child:
+                                    Image.asset("assets/images/facebook.png"),
                               ),
                             ),
                             CupertinoButton(
                               onPressed: () async {
-
                                 bool msg = await getsign.signWithgoogle();
                                 if (msg == true) {
                                   GetStorage g1 = GetStorage();
+                                  var userorseller = g1.read("U");
 
                                   g1.write("auth", 'google');
 
-
-
-                                  await Get.to(homeScreen());
+                                  userorseller == "user"
+                                      ? await Get.to(Userhome())
+                                      : await Get.to(homeScreen());
                                 } else {
                                   log("${msg} ----- gufgqukfgqeukg ufqeufuwehuwgukgihwILGhg");
                                   Get.snackbar("Shop Stop", "Invalid Entry");
@@ -162,7 +165,8 @@ class _loginscreenState extends State<loginscreen> {
                         color: Colors.blueAccent,
                         fontWeight: FontWeight.w600)),
                 onPressed: () {
-                  Get.offAll(signupscreen(), transition: Transition.leftToRight);
+                  Get.offAll(signupscreen(),
+                      transition: Transition.leftToRight);
                 },
               ),
             ],

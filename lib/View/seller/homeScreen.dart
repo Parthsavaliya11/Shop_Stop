@@ -7,6 +7,7 @@ import 'package:fierbase/View/seller/addproductpage.dart';
 import 'package:fierbase/View/seller/adminaccountpage.dart';
 import 'package:fierbase/View/seller/searchpage.dart';
 import 'package:fierbase/View/userorseller.dart';
+import 'package:fierbase/firestore/firestore%20controller.dart';
 import 'package:fierbase/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fierbase/Controller/addproductcontroller.dart';
@@ -289,9 +290,9 @@ class _homeScreenState extends State<homeScreen> {
         ),
         body: PageView(
           onPageChanged: (index) {
-            getstore.pronamee.clear();
-            getstore.propricee.clear();
-            getstore.prodescription.clear();
+            firestoreget.Firestoreget.pronamee.clear();
+            firestoreget.Firestoreget.propricee.clear();
+            firestoreget.Firestoreget.prodescription.clear();
             addproductcontroller.addpro.productpic = null;
             addproductcontroller.addpro.indicator_Flag.value = false;
           },

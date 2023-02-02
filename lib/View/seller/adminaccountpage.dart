@@ -153,7 +153,19 @@ class _AdminaccountpageState extends State<Adminaccountpage> {
               ),
               GestureDetector(
                 onTap: () {
-                  Editprofile.editprofile.editprofilemodel = Editprofilemodel(
+                  HomeScreenController.homeController.authmethod =
+                      HomeScreenController.homeController.authseprate
+                          .read('auth');
+                  log("${HomeScreenController.homeController.authmethod} auth metoooooooooooooooo");
+                  HomeScreenController.homeController.authmethod == "custom"
+                      ? Get.to(Updateprofile(),
+                      transition: Transition.cupertino)
+                      : ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Google Login Not Support"),
+                    ),
+
+                  );Editprofile.editprofile.editprofilemodel = Editprofilemodel(
                       docid: Profilecontroller.cont.alluserdetail[0].docid,
                       refurl: Profilecontroller
                           .cont.alluserdetail.value[0].userprofilelink,
@@ -163,17 +175,7 @@ class _AdminaccountpageState extends State<Adminaccountpage> {
                       Profilecontroller.cont.alluserdetail.value[0].mobile);
                   Editprofile.editprofile.refurl = Profilecontroller
                       .cont.alluserdetail.value[0].userprofilelink;
-                  HomeScreenController.homeController.authmethod =
-                      HomeScreenController.homeController.authseprate
-                          .read('auth');
-                  HomeScreenController.homeController.authmethod == "custom"
-                      ? Get.to(Updateprofile(),
-                      transition: Transition.cupertino)
-                      : ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text("Google Login Not Support"),
-                    ),
-                  );
+
                 },
                 child: ListTile(
                   trailing: Icon(Icons.arrow_forward_ios_rounded),

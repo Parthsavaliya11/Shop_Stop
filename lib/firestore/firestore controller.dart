@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class firestoreget extends GetxController {
+  firestoreget._();
+
+  static final Firestoreget = firestoreget._();
   TextEditingController pronamee = TextEditingController();
   TextEditingController propricee = TextEditingController();
   TextEditingController prodescription = TextEditingController();
@@ -18,12 +21,16 @@ class firestoreget extends GetxController {
       proprice = "".obs,
       prodisp = "".obs,
       prodocid = "".obs;
-
 }
 
 class fstoremodel {
-  String? productname, productprice, productdes, prodocimg,category,docid;
+  String? productname, productprice, productdes, prodocimg, category, docid;
 
   fstoremodel(
-      {this.productname, this.productprice, this.productdes, this.prodocimg,this.category,this.docid});
+      {this.productname,
+      this.productprice,
+      this.productdes,
+      this.prodocimg,
+      this.category,
+      this.docid});
 }
