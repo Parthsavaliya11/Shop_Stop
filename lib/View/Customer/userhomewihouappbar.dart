@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fierbase/View/Customer/cproductdetail.dart';
+import 'package:fierbase/animation/fade_animation.dart';
+import 'package:fierbase/animation/slide_animation.dart';
 import 'package:fierbase/model/Uhomemodel.dart';
 import 'package:fierbase/model/cProdetailModel.dart';
 import 'package:flutter/material.dart';
@@ -35,26 +37,31 @@ class _UserhomewithoutbarState extends State<Userhomewithoutbar> {
               SizedBox(
                 height: 3.h,
               ),
-              CarouselSlider.builder(
-                itemCount: Uhomecontroller.uhomecontroller.imgsliderimg.length,
-                itemBuilder: (context, index, _) {
-                  return Container(
-                    margin: EdgeInsets.all(6.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      image: DecorationImage(
-                        image: NetworkImage(
-                            "${Uhomecontroller.uhomecontroller.imgsliderimg[index]}"),
-                        fit: BoxFit.cover,
+              SlideAnimation(
+                begin: Offset(0, -400),
+                intervalStart: 0.4,
+                duration: Duration(milliseconds: 4000),
+                child: CarouselSlider.builder(
+                  itemCount: Uhomecontroller.uhomecontroller.imgsliderimg.length,
+                  itemBuilder: (context, index, _) {
+                    return Container(
+                      margin: EdgeInsets.all(6.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                          image: NetworkImage(
+                              "${Uhomecontroller.uhomecontroller.imgsliderimg[index]}"),
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                    ),
-                  );
-                },
-                options: CarouselOptions(
-                  height: 200,
-                  aspectRatio: 16 / 9,
-                  enlargeCenterPage: true,
-                  autoPlay: true,
+                    );
+                  },
+                  options: CarouselOptions(
+                    height: 200,
+                    aspectRatio: 16 / 9,
+                    enlargeCenterPage: true,
+                    autoPlay: true,
+                  ),
                 ),
               ),
               SizedBox(
@@ -85,58 +92,65 @@ class _UserhomewithoutbarState extends State<Userhomewithoutbar> {
               SingleChildScrollView(
                 physics: BouncingScrollPhysics(),
                 scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: Uhomecontroller.uhomecontroller.ctegorylist
-                      .asMap()
-                      .entries
-                      .map(
-                        (e) => Container(
-                          margin: EdgeInsets.all(15),
-                          child: InkWell(
-                            onTap: () {
-                              Uhomecontroller.uhomecontroller.category.value =
-                                  Uhomecontroller
-                                      .uhomecontroller.ctegorylistnames[e.key];
+                child: FadeAnimation(
+                  child: SlideAnimation(
+                    begin: Offset(500, 0),
+                    intervalStart: 0.4,
+                    duration: Duration(milliseconds: 4000),
+                    child: Row(
+                      children: Uhomecontroller.uhomecontroller.ctegorylist
+                          .asMap()
+                          .entries
+                          .map(
+                            (e) => Container(
+                              margin: EdgeInsets.all(15),
+                              child: InkWell(
+                                onTap: () {
+                                  Uhomecontroller.uhomecontroller.category.value =
+                                      Uhomecontroller
+                                          .uhomecontroller.ctegorylistnames[e.key];
 
-                              log("${Uhomecontroller.uhomecontroller.category.value}");
-                            },
-                            child: Ink(
-                              height: 10.h,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Colors.grey.shade400
-                                            .withOpacity(0.5),
-                                        blurRadius: 10,
-                                        offset: Offset(0, 7))
-                                  ],
-                                  border: Border.all(
-                                      color: Colors.blueAccent, width: 0.5),
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: Padding(
-                                padding: EdgeInsets.all(15),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      margin: EdgeInsets.only(right: 20),
-                                      height: 11.h,
-                                      width: 11.w,
-                                      child: Image.asset(
-                                          "${Uhomecontroller.uhomecontroller.ctegorylist[e.key]}"),
+                                  log("${Uhomecontroller.uhomecontroller.category.value}");
+                                },
+                                child: Ink(
+                                  height: 10.h,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color: Colors.grey.shade400
+                                                .withOpacity(0.5),
+                                            blurRadius: 10,
+                                            offset: Offset(0, 7))
+                                      ],
+                                      border: Border.all(
+                                          color: Colors.blueAccent, width: 0.5),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(15),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          margin: EdgeInsets.only(right: 20),
+                                          height: 11.h,
+                                          width: 11.w,
+                                          child: Image.asset(
+                                              "${Uhomecontroller.uhomecontroller.ctegorylist[e.key]}"),
+                                        ),
+                                        Text(
+                                          "${Uhomecontroller.uhomecontroller.ctegorylistnames[e.key]}",
+                                          style: GoogleFonts.poppins(),
+                                        ),
+                                      ],
                                     ),
-                                    Text(
-                                      "${Uhomecontroller.uhomecontroller.ctegorylistnames[e.key]}",
-                                      style: GoogleFonts.poppins(),
-                                    ),
-                                  ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ),
-                      )
-                      .toList(),
+                          )
+                          .toList(),
+                    ),
+                  ),
                 ),
               ),
               Obx(
@@ -185,126 +199,135 @@ class _UserhomewithoutbarState extends State<Userhomewithoutbar> {
                               ],
                             )
                           : SingleChildScrollView(
-                              child: StaggeredGrid.count(
-                                crossAxisCount: 2,
-                                children: Uhomecontroller
-                                    .uhomecontroller.allfinal
-                                    .map(
-                                      (index) => Padding(
-                                        padding: EdgeInsets.all(1.h),
-                                        child: GestureDetector(
-                                          onTap: () async {
-                                            Userprodetailcont.uprodetailcont
-                                                    .uproductdetail =
-                                                Uproductdetail(
-                                                    productname:
-                                                        index.productname,
-                                                    productprice:
-                                                        index.productprice,
-                                                    discription:
-                                                        index.productdes,
-                                                    imgurl: index.prodocimg,
-                                                    category: index.category,
-                                                    docid: index.docid);
-                                            Favcontroller.Favcont.e = (await Favexits(
-                                            "${Userprodetailcont.uprodetailcont.uproductdetail.docid}"))!;
-                                            Get.to(Cproductdetail(),
-                                                transition:
-                                                    Transition.cupertino);
-                                          },
-                                          child: Container(
-                                            height: 35.h,
-                                            width: 10.h,
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  width: 0.2,
-                                                  color: Colors.grey),
-                                              color: Colors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(17),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                    color: Colors.grey.shade200,
-                                                    blurRadius: 10,
-                                                    offset: Offset(0, 5))
-                                              ],
-                                            ),
-                                            child: Padding(
-                                              padding: EdgeInsets.all(2.w),
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceAround,
-                                                children: [
-                                                  Container(
-                                                    height: 20.h,
-                                                    width: double.infinity,
-                                                    child: ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
-                                                        child: FadeInImage
-                                                            .memoryNetwork(
-                                                          placeholder:
-                                                              kTransparentImage,
-                                                          fit: BoxFit.cover,
-                                                          imageCacheHeight:
-                                                              1000,
-                                                          //adding these two parameters
-                                                          imageCacheWidth: 1000,
-                                                          image:
-                                                              "${index.prodocimg}",
-                                                        )),
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      Container(
-                                                        height: 4.h,
-                                                        width: 40.w,
-                                                        child: Text(
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          "${index.productname}",
-                                                          style: GoogleFonts
-                                                              .poppins(
-                                                                  fontSize:
-                                                                      14.sp,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Row(
+                              child: FadeAnimation(
+                                intervalStart: 0.4,
+                                duration: Duration(milliseconds: 2500),
+                                child: SlideAnimation(
+                                  begin: Offset(0, 400),
+                                  intervalStart: 0.4,
+                                  duration: Duration(milliseconds: 4000),
+                                  child: StaggeredGrid.count(
+                                    crossAxisCount: 2,
+                                    children: Uhomecontroller
+                                        .uhomecontroller.allfinal
+                                        .map(
+                                          (index) => Padding(
+                                            padding: EdgeInsets.all(1.h),
+                                            child: GestureDetector(
+                                              onTap: () async {
+                                                Userprodetailcont.uprodetailcont
+                                                        .uproductdetail =
+                                                    Uproductdetail(
+                                                        productname:
+                                                            index.productname,
+                                                        productprice:
+                                                            index.productprice,
+                                                        discription:
+                                                            index.productdes,
+                                                        imgurl: index.prodocimg,
+                                                        category: index.category,
+                                                        docid: index.docid);
+                                                Favcontroller.Favcont.e = (await Favexits(
+                                                "${Userprodetailcont.uprodetailcont.uproductdetail.docid}"))!;
+                                                Get.to(Cproductdetail(),
+                                                    transition:
+                                                        Transition.cupertino);
+                                              },
+                                              child: Container(
+                                                height: 35.h,
+                                                width: 10.h,
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      width: 0.2,
+                                                      color: Colors.grey),
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(17),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                        color: Colors.grey.shade200,
+                                                        blurRadius: 10,
+                                                        offset: Offset(0, 5))
+                                                  ],
+                                                ),
+                                                child: Padding(
+                                                  padding: EdgeInsets.all(2.w),
+                                                  child: Column(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
-                                                            .spaceBetween,
+                                                            .spaceAround,
                                                     children: [
-                                                      Text(
-                                                        "${index.productprice} \$",
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                                fontSize:
-                                                                    14.sp),
+                                                      Container(
+                                                        height: 20.h,
+                                                        width: double.infinity,
+                                                        child: ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(10),
+                                                            child: FadeInImage
+                                                                .memoryNetwork(
+                                                              placeholder:
+                                                                  kTransparentImage,
+                                                              fit: BoxFit.cover,
+                                                              imageCacheHeight:
+                                                                  1000,
+                                                              //adding these two parameters
+                                                              imageCacheWidth: 1000,
+                                                              image:
+                                                                  "${index.prodocimg}",
+                                                            )),
                                                       ),
-                                                      Text(
-                                                        "${index.category}",
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                                color: Colors
-                                                                    .black),
-                                                      )
+                                                      Row(
+                                                        children: [
+                                                          Container(
+                                                            height: 4.h,
+                                                            width: 40.w,
+                                                            child: Text(
+                                                              overflow: TextOverflow
+                                                                  .ellipsis,
+                                                              "${index.productname}",
+                                                              style: GoogleFonts
+                                                                  .poppins(
+                                                                      fontSize:
+                                                                          14.sp,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Text(
+                                                            "${index.productprice} \$",
+                                                            style:
+                                                                GoogleFonts.poppins(
+                                                                    fontSize:
+                                                                        14.sp),
+                                                          ),
+                                                          Text(
+                                                            "${index.category}",
+                                                            style:
+                                                                GoogleFonts.poppins(
+                                                                    color: Colors
+                                                                        .black),
+                                                          )
+                                                        ],
+                                                      ),
                                                     ],
                                                   ),
-                                                ],
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      ),
-                                    )
-                                    .toList(),
+                                        )
+                                        .toList(),
+                                  ),
+                                ),
                               ),
                             );
                     }

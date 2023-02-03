@@ -193,6 +193,9 @@ class _CproductdetailState extends State<Cproductdetail> {
                         "${Userprodetailcont.uprodetailcont.uproductdetail.category}",
                     "docid":
                         "${Userprodetailcont.uprodetailcont.uproductdetail.docid}",
+                    "qty":
+                        1,
+                    "orignalprice" : "${Userprodetailcont.uprodetailcont.uproductdetail.productprice}"
                   });
                 }
               },

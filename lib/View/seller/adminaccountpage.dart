@@ -14,6 +14,7 @@ import '../../Controller/userprofile.dart';
 import '../../firestore/fierStonehelper.dart';
 import '../../main.dart';
 import '../../model/editprofilemodel.dart';
+import '../userorseller.dart';
 
 class Adminaccountpage extends StatefulWidget {
   const Adminaccountpage({Key? key}) : super(key: key);
@@ -197,7 +198,7 @@ class _AdminaccountpageState extends State<Adminaccountpage> {
 
                   getsign.logout();
                   getsign.googlelogout();
-                  Get.offAllNamed('login');
+                  Get.offAll(Userorseller());
                 },
                 child: ListTile(
                   trailing: Icon(Icons.arrow_forward_ios_rounded),

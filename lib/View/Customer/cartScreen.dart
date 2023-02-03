@@ -1,14 +1,10 @@
 import 'dart:developer';
-import 'dart:ui';
-
 import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fierbase/Controller/cartcontroller.dart';
-import 'package:fierbase/View/componets/buttons.dart';
 import 'package:fierbase/firestore/fierStonehelper.dart';
 import 'package:fierbase/model/cartModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -47,6 +43,8 @@ class _CartScreenState extends State<CartScreen> {
                 String productdisc = z['description'];
                 String imgurl = z['imageurl'];
                 String category = z['category'];
+                String orignalprice = z["orignalprice"];
+                int qty = z['qty'];
                 String docid = z.id;
                 Cartmodel cartmodel = Cartmodel(
                     productname: productname,
@@ -54,7 +52,9 @@ class _CartScreenState extends State<CartScreen> {
                     docid: docid,
                     category: category,
                     discription: productdisc,
-                    imgurl: imgurl);
+                    imgurl: imgurl,
+                    qty: qty.toString(),
+                    orignalprice: orignalprice);
                 log("TOTAL ${total}");
                 Cartcontroller.cartController.allfinal.add(cartmodel);
               }
@@ -140,11 +140,44 @@ class _CartScreenState extends State<CartScreen> {
                                         color: Colors.grey.shade600,
                                       ),
                                     ),
-                                    SizedBox(
-                                      width: 24.w,
-                                      child: Row(
-                                        children: [
-                                          SizedBox(
+                                    Row(
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            if (int.parse(Cartcontroller
+                                                    .cartController
+                                                    .allfinal[index]
+                                                    .qty!) <=
+                                                1) {
+                                              Fluttertoast.showToast(
+                                                  msg:
+                                                      "Minimum 1 Item In Cart...");
+                                            } else {
+                                              FirebaseFirestore.instance
+                                                  .collection("Cart")
+                                                  .doc(
+                                                      "${FirebaseAuth.instance.currentUser!.uid}")
+                                                  .collection("usercart")
+                                                  .doc(
+                                                      "${Cartcontroller.cartController.allfinal[index].docid}")
+                                                  .update({
+                                                "qty": FieldValue.increment(-1),
+                                                "productprice": Cartcontroller
+                                                    .cartController
+                                                    .CartpriceDecriment(
+                                                        int.parse(Cartcontroller
+                                                            .cartController
+                                                            .allfinal[index]
+                                                            .productprice!),
+                                                        index,
+                                                        int.parse(Cartcontroller
+                                                            .cartController
+                                                            .allfinal[index]
+                                                            .orignalprice!))
+                                              });
+                                            }
+                                          },
+                                          child: SizedBox(
                                             height: 25,
                                             child: CircleAvatar(
                                               child: Icon(
@@ -153,12 +186,49 @@ class _CartScreenState extends State<CartScreen> {
                                               ),
                                             ),
                                           ),
-                                          Text(
-                                            "1",
-                                            style: GoogleFonts.poppins(
-                                                fontSize: 13.sp),
-                                          ),
-                                          SizedBox(
+                                        ),
+                                        Text(
+                                          "${Cartcontroller.cartController.allfinal[index].qty.toString()}",
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 13.sp),
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {
+                                            FirebaseFirestore.instance
+                                                .collection("Cart")
+                                                .doc(
+                                                    "${FirebaseAuth.instance.currentUser!.uid}")
+                                                .collection("usercart")
+                                                .doc(
+                                                    "${Cartcontroller.cartController.allfinal[index].docid}")
+                                                .update({
+                                              "qty": FieldValue.increment(1),
+                                            });
+                                            FirebaseFirestore.instance
+                                                .collection("Cart")
+                                                .doc(
+                                                    "${FirebaseAuth.instance.currentUser!.uid}")
+                                                .collection("usercart")
+                                                .doc(
+                                                    "${Cartcontroller.cartController.allfinal[index].docid}")
+                                                .update({
+                                              "productprice": Cartcontroller
+                                                  .cartController
+                                                  .Cartpriceincriment(
+                                                int.parse(Cartcontroller
+                                                    .cartController
+                                                    .allfinal[index]
+                                                    .orignalprice!),
+                                                index,
+                                                int.parse(Cartcontroller
+                                                        .cartController
+                                                        .allfinal[index]
+                                                        .qty!) +
+                                                    1,
+                                              )
+                                            });
+                                          },
+                                          child: SizedBox(
                                             height: 25,
                                             child: CircleAvatar(
                                               child: Icon(
@@ -167,8 +237,8 @@ class _CartScreenState extends State<CartScreen> {
                                               ),
                                             ),
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),

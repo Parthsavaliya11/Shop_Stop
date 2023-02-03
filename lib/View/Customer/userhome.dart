@@ -4,6 +4,7 @@ import 'package:badges/badges.dart' as b;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fierbase/View/Customer/cartScreen.dart';
 import 'package:fierbase/View/Customer/userhomewihouappbar.dart';
+import 'package:fierbase/animation/slide_animation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,6 +16,7 @@ import '../../Controller/conManagerController.dart';
 import '../../Controller/homeScreenController.dart';
 import '../../Controller/userhomecontroller.dart';
 import '../../Controller/userprofile.dart';
+import '../../animation/fade_animation.dart';
 import '../../firestore/fierStonehelper.dart';
 import '../../main.dart';
 import '../seller/adminaccountpage.dart';
@@ -291,77 +293,87 @@ class _UserhomeState extends State<Userhome> {
                     ],
                   ),
                 ),
-                bottomNavigationBar: GNav(
-                  selectedIndex: Uhomecontroller.uhomecontroller.tabindex.value,
-                  onTabChange: (tab) {
-                    Uhomecontroller.uhomecontroller.tabindex.value = tab;
-                    Uhomecontroller.uhomecontroller.Uhometabcont.animateToPage(
-                        tab,
-                        duration: Duration(milliseconds: 700),
-                        curve: Curves.easeInOutExpo);
-                  },
-                  textStyle: GoogleFonts.poppins(color: Colors.white),
-                  tabMargin: EdgeInsets.all(10),
-                  rippleColor: Colors.grey.shade100,
-                  // tab button ripple color when pressed
-                  haptic: true,
-                  // haptic feedback
-                  tabBorderRadius: 50,
+                bottomNavigationBar: FadeAnimation(
+                  intervalStart: 0.4,
+                  duration: Duration(milliseconds: 2500),
+                  child: SlideAnimation(
+                    begin: Offset(0, 800),
+                    intervalStart: 0.4,
+                    duration: Duration(milliseconds: 2500),
 
-                  curve: Curves.easeIn,
-                  // tab animation curves
-                  duration: Duration(milliseconds: 500),
-                  // tab animation duration
-                  gap: 2,
-                  color: Colors.grey,
-                  activeColor: Colors.white,
-                  iconSize: 25,
-                  tabBackgroundColor: Colors.blueAccent,
-                  padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 15),
-                  tabs: [
-                    GButton(
-                      icon: Icons.home,
-                      text: "Home",
-                    ),
-                    GButton(
-                      icon: Icons.favorite,
-                      text: "Fav",
-                    ),
-                    GButton(
-                      icon: Icons.cabin,
-                      leading: b.Badge(
-                        badgeStyle: b.BadgeStyle(
-                            elevation: 0,
-                            badgeColor: Uhomecontroller
-                                        .uhomecontroller.tabindex.value ==
-                                    2
-                                ? Colors.white
-                                : Colors.blueAccent),
-                        badgeContent: Text(
-                          '3',
-                          style: GoogleFonts.poppins(
-                              color: Uhomecontroller
-                                          .uhomecontroller.tabindex.value ==
-                                      2
-                                  ? Colors.black
-                                  : Colors.white),
+                    child: GNav(
+                      selectedIndex: Uhomecontroller.uhomecontroller.tabindex.value,
+                      onTabChange: (tab) {
+                        Uhomecontroller.uhomecontroller.tabindex.value = tab;
+                        Uhomecontroller.uhomecontroller.Uhometabcont.animateToPage(
+                            tab,
+                            duration: Duration(milliseconds: 700),
+                            curve: Curves.easeInOutExpo);
+                      },
+                      textStyle: GoogleFonts.poppins(color: Colors.white),
+                      tabMargin: EdgeInsets.all(10),
+                      rippleColor: Colors.grey.shade100,
+                      // tab button ripple color when pressed
+                      haptic: true,
+                      // haptic feedback
+                      tabBorderRadius: 50,
+
+                      curve: Curves.easeIn,
+                      // tab animation curves
+                      duration: Duration(milliseconds: 500),
+                      // tab animation duration
+                      gap: 2,
+                      color: Colors.grey,
+                      activeColor: Colors.white,
+                      iconSize: 25,
+                      tabBackgroundColor: Colors.blueAccent,
+                      padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 15),
+                      tabs: [
+                        GButton(
+                          icon: Icons.home,
+                          text: "Home",
                         ),
-                        child: Icon(
-                          Icons.shopping_cart,
-                          color:
-                              Uhomecontroller.uhomecontroller.tabindex.value ==
-                                      2
-                                  ? Colors.white
-                                  : Colors.grey,
+                        GButton(
+                          icon: Icons.favorite,
+                          text: "Fav",
                         ),
-                      ),
-                      text: "    Cart",
+                        GButton(
+                          icon: Icons.cabin,
+                          leading: b.Badge(
+                            badgeStyle: b.BadgeStyle(
+                                elevation: 0,
+                                badgeColor: Uhomecontroller
+                                            .uhomecontroller.tabindex.value ==
+                                        2
+                                    ? Colors.white
+                                    : Colors.blueAccent),
+                            badgeContent: Text(
+                              '3',
+                              style: GoogleFonts.poppins(
+                                  color: Uhomecontroller
+                                              .uhomecontroller.tabindex.value ==
+                                          2
+                                      ? Colors.black
+                                      : Colors.white),
+                            ),
+                            child: Icon(
+                              Icons.shopping_cart,
+                              color:
+                                  Uhomecontroller.uhomecontroller.tabindex.value ==
+                                          2
+                                      ? Colors.white
+                                      : Colors.grey,
+                            ),
+                          ),
+                          text: "    Cart",
+                        ),
+                        GButton(
+                          icon: Icons.person,
+                          text: "Profile",
+                        ),
+                      ],
                     ),
-                    GButton(
-                      icon: Icons.person,
-                      text: "Profile",
-                    ),
-                  ],
+                  ),
                 ),
               ),
       ),

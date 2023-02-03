@@ -1,5 +1,12 @@
 class Cartmodel {
-  String? productname, category, discription, productprice, imgurl, docid;
+  String? productname,
+      category,
+      discription,
+      productprice,
+      imgurl,
+      docid,
+      qty,
+      orignalprice;
 
   Cartmodel(
       {this.productname,
@@ -7,5 +14,7 @@ class Cartmodel {
       this.discription,
       this.productprice,
       this.imgurl,
-      this.docid});
+      this.docid,
+      this.qty,
+      this.orignalprice});
 }
