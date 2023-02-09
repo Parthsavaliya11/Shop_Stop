@@ -41,7 +41,7 @@ Widget loginbtn() {
         onPressed: () async {
           String msg = await getsign.signIn(
               getsign.txt_mailIn.text, getsign.txt_passwordIn.text);
-          await Get.snackbar("${"ShopStop"}", "${msg}");
+          Get.snackbar("ShopStop", msg);
           if (msg == "Login success") {
             GetStorage g1 = GetStorage();
 

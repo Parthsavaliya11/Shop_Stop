@@ -3,22 +3,28 @@ import 'dart:developer';
 import 'package:badges/badges.dart' as b;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fierbase/View/Customer/cartScreen.dart';
+import 'package:fierbase/View/Customer/user_search.dart';
 import 'package:fierbase/View/Customer/userhomewihouappbar.dart';
+import 'package:fierbase/View/seller/updateprofile.dart';
 import 'package:fierbase/animation/slide_animation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:rive/rive.dart';
 import 'package:sizer/sizer.dart';
 import '../../Controller/conManagerController.dart';
+import '../../Controller/editprofilecontroller.dart';
 import '../../Controller/homeScreenController.dart';
 import '../../Controller/userhomecontroller.dart';
 import '../../Controller/userprofile.dart';
 import '../../animation/fade_animation.dart';
 import '../../firestore/fierStonehelper.dart';
 import '../../main.dart';
+import '../../model/editprofilemodel.dart';
 import '../seller/adminaccountpage.dart';
 import '../userorseller.dart';
 import 'favScreen.dart';
@@ -68,7 +74,10 @@ class _UserhomeState extends State<Userhome> {
                             padding: EdgeInsets.only(right: 2.w),
                             child: IconButton(
                               iconSize: 25,
-                              onPressed: alldataread,
+                              onPressed: () {
+                                Get.to(Usersearch(),
+                                    transition: Transition.size);
+                              },
                               icon: Icon(Icons.search),
                             ),
                           ),
@@ -89,7 +98,7 @@ class _UserhomeState extends State<Userhome> {
                   },
                   body: Column(
                     children: [
-                      Expanded(
+                      Flexible(
                         child: PageView(
                           onPageChanged: (index) {},
                           physics: NeverScrollableScrollPhysics(),
@@ -258,7 +267,26 @@ class _UserhomeState extends State<Userhome> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          GetStorage g = GetStorage();
+                          String user = g.read("auth");
+                          user == "custom"
+                              ? Get.to(const Updateprofile())
+                              : Fluttertoast.showToast(
+                                  msg: "Google-login Not Support");
+                          Editprofile.editprofile.editprofilemodel =
+                              Editprofilemodel(
+                                  docid: Profilecontroller
+                                      .cont.alluserdetail[0].docid,
+                                  refurl: Profilecontroller.cont.alluserdetail
+                                      .value[0].userprofilelink,
+                                  uname: Profilecontroller
+                                      .cont.alluserdetail.value[0].username,
+                                  umobile: Profilecontroller
+                                      .cont.alluserdetail.value[0].mobile);
+                          Editprofile.editprofile.refurl = Profilecontroller
+                              .cont.alluserdetail.value[0].userprofilelink;
+                        },
                         child: ListTile(
                           leading: Icon(
                             Icons.edit_note_rounded,
@@ -300,15 +328,15 @@ class _UserhomeState extends State<Userhome> {
                     begin: Offset(0, 800),
                     intervalStart: 0.4,
                     duration: Duration(milliseconds: 2500),
-
                     child: GNav(
-                      selectedIndex: Uhomecontroller.uhomecontroller.tabindex.value,
+                      selectedIndex:
+                          Uhomecontroller.uhomecontroller.tabindex.value,
                       onTabChange: (tab) {
                         Uhomecontroller.uhomecontroller.tabindex.value = tab;
-                        Uhomecontroller.uhomecontroller.Uhometabcont.animateToPage(
-                            tab,
-                            duration: Duration(milliseconds: 700),
-                            curve: Curves.easeInOutExpo);
+                        Uhomecontroller.uhomecontroller.Uhometabcont
+                            .animateToPage(tab,
+                                duration: Duration(milliseconds: 700),
+                                curve: Curves.easeInOutExpo);
                       },
                       textStyle: GoogleFonts.poppins(color: Colors.white),
                       tabMargin: EdgeInsets.all(10),
@@ -327,7 +355,8 @@ class _UserhomeState extends State<Userhome> {
                       activeColor: Colors.white,
                       iconSize: 25,
                       tabBackgroundColor: Colors.blueAccent,
-                      padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 15),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 5.w, vertical: 15),
                       tabs: [
                         GButton(
                           icon: Icons.home,
@@ -358,11 +387,11 @@ class _UserhomeState extends State<Userhome> {
                             ),
                             child: Icon(
                               Icons.shopping_cart,
-                              color:
-                                  Uhomecontroller.uhomecontroller.tabindex.value ==
-                                          2
-                                      ? Colors.white
-                                      : Colors.grey,
+                              color: Uhomecontroller
+                                          .uhomecontroller.tabindex.value ==
+                                      2
+                                  ? Colors.white
+                                  : Colors.grey,
                             ),
                           ),
                           text: "    Cart",

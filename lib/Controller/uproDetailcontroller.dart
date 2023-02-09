@@ -6,4 +6,5 @@ class Userprodetailcont extends GetxController
   Userprodetailcont._();
   static final uprodetailcont = Userprodetailcont._();
   Uproductdetail uproductdetail = Uproductdetail();
+
 }

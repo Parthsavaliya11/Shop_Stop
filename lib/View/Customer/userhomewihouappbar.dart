@@ -42,7 +42,8 @@ class _UserhomewithoutbarState extends State<Userhomewithoutbar> {
                 intervalStart: 0.4,
                 duration: Duration(milliseconds: 4000),
                 child: CarouselSlider.builder(
-                  itemCount: Uhomecontroller.uhomecontroller.imgsliderimg.length,
+                  itemCount:
+                      Uhomecontroller.uhomecontroller.imgsliderimg.length,
                   itemBuilder: (context, index, _) {
                     return Container(
                       margin: EdgeInsets.all(6.0),
@@ -106,9 +107,10 @@ class _UserhomewithoutbarState extends State<Userhomewithoutbar> {
                               margin: EdgeInsets.all(15),
                               child: InkWell(
                                 onTap: () {
-                                  Uhomecontroller.uhomecontroller.category.value =
-                                      Uhomecontroller
-                                          .uhomecontroller.ctegorylistnames[e.key];
+                                  Uhomecontroller
+                                          .uhomecontroller.category.value =
+                                      Uhomecontroller.uhomecontroller
+                                          .ctegorylistnames[e.key];
 
                                   log("${Uhomecontroller.uhomecontroller.category.value}");
                                 },
@@ -225,10 +227,12 @@ class _UserhomewithoutbarState extends State<Userhomewithoutbar> {
                                                         discription:
                                                             index.productdes,
                                                         imgurl: index.prodocimg,
-                                                        category: index.category,
+                                                        category:
+                                                            index.category,
                                                         docid: index.docid);
-                                                Favcontroller.Favcont.e = (await Favexits(
-                                                "${Userprodetailcont.uprodetailcont.uproductdetail.docid}"))!;
+                                                Favcontroller.Favcont.e =
+                                                    (await Favexits(
+                                                        "${Userprodetailcont.uprodetailcont.uproductdetail.docid}"))!;
                                                 Get.to(Cproductdetail(),
                                                     transition:
                                                         Transition.cupertino);
@@ -245,7 +249,8 @@ class _UserhomewithoutbarState extends State<Userhomewithoutbar> {
                                                       BorderRadius.circular(17),
                                                   boxShadow: [
                                                     BoxShadow(
-                                                        color: Colors.grey.shade200,
+                                                        color: Colors
+                                                            .grey.shade200,
                                                         blurRadius: 10,
                                                         offset: Offset(0, 5))
                                                   ],
@@ -263,7 +268,8 @@ class _UserhomewithoutbarState extends State<Userhomewithoutbar> {
                                                         child: ClipRRect(
                                                             borderRadius:
                                                                 BorderRadius
-                                                                    .circular(10),
+                                                                    .circular(
+                                                                        10),
                                                             child: FadeInImage
                                                                 .memoryNetwork(
                                                               placeholder:
@@ -272,7 +278,8 @@ class _UserhomewithoutbarState extends State<Userhomewithoutbar> {
                                                               imageCacheHeight:
                                                                   1000,
                                                               //adding these two parameters
-                                                              imageCacheWidth: 1000,
+                                                              imageCacheWidth:
+                                                                  1000,
                                                               image:
                                                                   "${index.prodocimg}",
                                                             )),
@@ -283,16 +290,16 @@ class _UserhomewithoutbarState extends State<Userhomewithoutbar> {
                                                             height: 4.h,
                                                             width: 40.w,
                                                             child: Text(
-                                                              overflow: TextOverflow
-                                                                  .ellipsis,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
                                                               "${index.productname}",
-                                                              style: GoogleFonts
-                                                                  .poppins(
-                                                                      fontSize:
-                                                                          14.sp,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600),
+                                                              style: GoogleFonts.poppins(
+                                                                  fontSize:
+                                                                      14.sp,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600),
                                                             ),
                                                           ),
                                                         ],
@@ -304,15 +311,15 @@ class _UserhomewithoutbarState extends State<Userhomewithoutbar> {
                                                         children: [
                                                           Text(
                                                             "${index.productprice} \$",
-                                                            style:
-                                                                GoogleFonts.poppins(
+                                                            style: GoogleFonts
+                                                                .poppins(
                                                                     fontSize:
                                                                         14.sp),
                                                           ),
                                                           Text(
                                                             "${index.category}",
-                                                            style:
-                                                                GoogleFonts.poppins(
+                                                            style: GoogleFonts
+                                                                .poppins(
                                                                     color: Colors
                                                                         .black),
                                                           )

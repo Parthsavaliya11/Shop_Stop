@@ -111,15 +111,12 @@ class cloudStorageHelper {
 
   void Updateprofileimg(
       String refurl, String updateimg, BuildContext context) async {
-
     uploadTask = FirebaseStorage.instance.refFromURL("$refurl").putFile(
           File("$updateimg"),
         );
     streamSubscription = await uploadTask!.snapshotEvents.listen((event) {
       Editprofile.editprofile.sindicator.value =
           event.bytesTransferred / event.totalBytes * 100;
-
-
     });
     TaskSnapshot? taskSnapshot = await uploadTask;
     downloadurl = await taskSnapshot!.ref.getDownloadURL();

@@ -30,6 +30,7 @@ class _AdminaccountpageState extends State<Adminaccountpage> {
     super.initState();
     readuserprofile();
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -40,107 +41,105 @@ class _AdminaccountpageState extends State<Adminaccountpage> {
             children: [
               HomeScreenController.homeController.authmethod == "custom"
                   ? FutureBuilder(
-                  future: readuserprofile(),
-                  builder:
-                      (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (snapshot.hasError) {
-                      return Text("${snapshot.error}");
-                    } else if (snapshot.hasData) {
-                      Profilecontroller.cont.alluserdetail.clear();
-                      var userdata = snapshot.data!.docs;
+                      future: readuserprofile(),
+                      builder:
+                          (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.hasError) {
+                          return Text("${snapshot.error}");
+                        } else if (snapshot.hasData) {
+                          Profilecontroller.cont.alluserdetail.clear();
+                          var userdata = snapshot.data!.docs;
 
-                      for (QueryDocumentSnapshot z in userdata) {
-                        var datadocs = z.data() as Map<String, dynamic>;
+                          for (QueryDocumentSnapshot z in userdata) {
+                            var datadocs = z.data() as Map<String, dynamic>;
 
-                        UserprofileData u = UserprofileData(
-                            docid: z.id,
-                            username: datadocs['username'],
-                            mobile: datadocs['mobile'],
-                            userprofilelink: datadocs['userprofilelink']);
-                        Profilecontroller.cont.alluserdetail.value.add(u);
-                        log("${Profilecontroller.cont.alluserdetail.value}");
-                      }
-                      return Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              height: 5.h,
+                            UserprofileData u = UserprofileData(
+                                docid: z.id,
+                                username: datadocs['username'],
+                                mobile: datadocs['mobile'],
+                                userprofilelink: datadocs['userprofilelink']);
+                            Profilecontroller.cont.alluserdetail.value.add(u);
+                            log("${Profilecontroller.cont.alluserdetail.value}");
+                          }
+                          return Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  height: 5.h,
+                                ),
+                                Container(
+                                  height: 20.h,
+                                  width: 20.h,
+                                  child: CircleAvatar(
+                                    backgroundImage: NetworkImage(
+                                        "${Profilecontroller.cont.alluserdetail.value[0].userprofilelink}"),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 4.h,
+                                ),
+                                Text(
+                                  "${Profilecontroller.cont.alluserdetail.value[0].username}",
+                                  style: GoogleFonts.poppins(
+                                      color: Colors.black,
+                                      fontSize: 20.sp,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                SizedBox(
+                                  height: 1.h,
+                                ),
+                                Text(
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2,
+                                  "${FirebaseAuth.instance.currentUser!.email}",
+                                  style: GoogleFonts.poppins(
+                                      color: Colors.black, fontSize: 15.sp),
+                                ),
+                              ],
                             ),
-                            Container(
-                              height: 20.h,
-                              width: 20.h,
-                              child: CircleAvatar(
-                                backgroundImage: NetworkImage(
-                                    "${Profilecontroller.cont.alluserdetail
-                                        .value[0].userprofilelink}"),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 4.h,
-                            ),
-                            Text(
-                              "${Profilecontroller.cont.alluserdetail.value[0]
-                                  .username}",
-                              style: GoogleFonts.poppins(
-                                  color: Colors.black,
-                                  fontSize: 20.sp,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                            SizedBox(
-                              height: 1.h,
-                            ),
-                            Text(
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                              "${FirebaseAuth.instance.currentUser!.email}",
-                              style: GoogleFonts.poppins(
-                                  color: Colors.black, fontSize: 15.sp),
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-                    return CircularProgressIndicator();
-                  })
+                          );
+                        }
+                        return CircularProgressIndicator();
+                      })
                   : Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: 5.h,
-                    ),
-                    Container(
-                      height: 20.h,
-                      width: 20.h,
-                      child: CircleAvatar(
-                        backgroundImage: NetworkImage(
-                            "${FirebaseAuth.instance.currentUser!.photoURL}"),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: 5.h,
+                          ),
+                          Container(
+                            height: 20.h,
+                            width: 20.h,
+                            child: CircleAvatar(
+                              backgroundImage: NetworkImage(
+                                  "${FirebaseAuth.instance.currentUser!.photoURL}"),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 4.h,
+                          ),
+                          Text(
+                            "${FirebaseAuth.instance.currentUser!.displayName}",
+                            style: GoogleFonts.poppins(
+                                color: Colors.black,
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          SizedBox(
+                            height: 1.h,
+                          ),
+                          Text(
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            "${FirebaseAuth.instance.currentUser!.email}",
+                            style: GoogleFonts.poppins(
+                                color: Colors.black, fontSize: 15.sp),
+                          ),
+                        ],
                       ),
                     ),
-                    SizedBox(
-                      height: 4.h,
-                    ),
-                    Text(
-                      "${FirebaseAuth.instance.currentUser!.displayName}",
-                      style: GoogleFonts.poppins(
-                          color: Colors.black,
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.w500),
-                    ),
-                    SizedBox(
-                      height: 1.h,
-                    ),
-                    Text(
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                      "${FirebaseAuth.instance.currentUser!.email}",
-                      style: GoogleFonts.poppins(
-                          color: Colors.black, fontSize: 15.sp),
-                    ),
-                  ],
-                ),
-              ),
               SizedBox(
                 height: 8.h,
               ),
@@ -160,23 +159,22 @@ class _AdminaccountpageState extends State<Adminaccountpage> {
                   log("${HomeScreenController.homeController.authmethod} auth metoooooooooooooooo");
                   HomeScreenController.homeController.authmethod == "custom"
                       ? Get.to(Updateprofile(),
-                      transition: Transition.cupertino)
+                          transition: Transition.cupertino)
                       : ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text("Google Login Not Support"),
-                    ),
-
-                  );Editprofile.editprofile.editprofilemodel = Editprofilemodel(
+                          SnackBar(
+                            content: Text("Google Login Not Support"),
+                          ),
+                        );
+                  Editprofile.editprofile.editprofilemodel = Editprofilemodel(
                       docid: Profilecontroller.cont.alluserdetail[0].docid,
                       refurl: Profilecontroller
                           .cont.alluserdetail.value[0].userprofilelink,
                       uname: Profilecontroller
                           .cont.alluserdetail.value[0].username,
                       umobile:
-                      Profilecontroller.cont.alluserdetail.value[0].mobile);
+                          Profilecontroller.cont.alluserdetail.value[0].mobile);
                   Editprofile.editprofile.refurl = Profilecontroller
                       .cont.alluserdetail.value[0].userprofilelink;
-
                 },
                 child: ListTile(
                   trailing: Icon(Icons.arrow_forward_ios_rounded),

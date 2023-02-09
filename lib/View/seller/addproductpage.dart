@@ -81,7 +81,6 @@ class _addproductState extends State<addproduct> {
                               setState(() {
                                 addproductcontroller.addpro.productpic =
                                     compressedimg;
-
                               });
                             },
                             child: DottedBorder(

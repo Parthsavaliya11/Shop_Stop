@@ -159,11 +159,13 @@ class _loginscreenState extends State<loginscreen> {
                 ),
               ),
               TextButton(
-                child: Text('${"Signup"} ',
-                    style: GoogleFonts.poppins(
-                        fontSize: 12.sp,
-                        color: Colors.blueAccent,
-                        fontWeight: FontWeight.w600)),
+                child: Text(
+                  '${"Signup"} ',
+                  style: GoogleFonts.poppins(
+                      fontSize: 12.sp,
+                      color: Colors.blueAccent,
+                      fontWeight: FontWeight.w600),
+                ),
                 onPressed: () {
                   Get.offAll(signupscreen(),
                       transition: Transition.leftToRight);

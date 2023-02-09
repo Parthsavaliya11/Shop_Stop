@@ -223,15 +223,16 @@ void addFav() {
     "docid": "${Userprodetailcont.uprodetailcont.uproductdetail.docid}",
   });
 }
+
 Future<bool?> Favexits(String docid) async {
   bool exists;
   DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
-  await FirebaseFirestore.instance
-      .collection("Fav")
-      .doc("${FirebaseAuth.instance.currentUser!.uid}")
-      .collection("Fav")
-      .doc(docid)
-      .get();
+      await FirebaseFirestore.instance
+          .collection("Fav")
+          .doc("${FirebaseAuth.instance.currentUser!.uid}")
+          .collection("Fav")
+          .doc(docid)
+          .get();
 
   if (documentSnapshot.exists) {
     return true;
@@ -245,5 +246,14 @@ Stream<QuerySnapshot<Map<String, dynamic>>> readfav() {
       .collection("Fav")
       .doc(FirebaseAuth.instance.currentUser!.uid)
       .collection("Fav")
+      .snapshots();
+}
+
+Stream<QuerySnapshot<Map<String, dynamic>>> userKsearch() {
+  return FirebaseFirestore.instance
+      .collectionGroup("data")
+      .where("search",
+      arrayContains:
+              SearchPageController.searchcontroller.searchkeywords.value)
       .snapshots();
 }

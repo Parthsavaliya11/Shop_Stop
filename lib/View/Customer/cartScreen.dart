@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:sizer/sizer.dart';
 
 class CartScreen extends StatefulWidget {
@@ -22,6 +23,32 @@ class _CartScreenState extends State<CartScreen> {
   int total = 0;
   RxBool isvisible = true.obs;
   ScrollController? scrollController;
+  final _razorpay = Razorpay();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET,_handleExternalWallet);
+  }
+
+  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    Fluttertoast.showToast(msg: "${response.orderId}");
+
+    // Do something when payment succeeds
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    // Do something when an external wallet was selected
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    Fluttertoast.showToast(msg: "${response.code}");
+
+    // Do something when payment fails
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -177,7 +204,7 @@ class _CartScreenState extends State<CartScreen> {
                                               });
                                             }
                                           },
-                                          child: SizedBox(
+                                          child: const SizedBox(
                                             height: 25,
                                             child: CircleAvatar(
                                               child: Icon(
@@ -188,7 +215,7 @@ class _CartScreenState extends State<CartScreen> {
                                           ),
                                         ),
                                         Text(
-                                          "${Cartcontroller.cartController.allfinal[index].qty.toString()}",
+                                          Cartcontroller.cartController.allfinal[index].qty.toString(),
                                           style: GoogleFonts.poppins(
                                               fontSize: 13.sp),
                                         ),
@@ -197,7 +224,7 @@ class _CartScreenState extends State<CartScreen> {
                                             FirebaseFirestore.instance
                                                 .collection("Cart")
                                                 .doc(
-                                                    "${FirebaseAuth.instance.currentUser!.uid}")
+                                                    FirebaseAuth.instance.currentUser!.uid)
                                                 .collection("usercart")
                                                 .doc(
                                                     "${Cartcontroller.cartController.allfinal[index].docid}")
@@ -228,7 +255,7 @@ class _CartScreenState extends State<CartScreen> {
                                               )
                                             });
                                           },
-                                          child: SizedBox(
+                                          child: const SizedBox(
                                             height: 25,
                                             child: CircleAvatar(
                                               child: Icon(
@@ -283,8 +310,20 @@ class _CartScreenState extends State<CartScreen> {
                                     elevation: 0,
                                     shadowColor: Colors.transparent,
                                     backgroundColor:
-                                        Colors.blueAccent.withOpacity(0.8)),
-                                onPressed: () {},
+                                        Colors.blueAccent.withOpacity(1)),
+                                onPressed: () {
+                                  var options = {
+                                    'key': 'rzp_test_KVmgulfD5V2DZB',
+                                    'amount': total * 100,
+                                    'name': '${FirebaseAuth.instance.currentUser!.displayName}',
+                                    'description': 'ShopStop Cart Checkout',
+                                    'prefill': {
+                                      'contact': '${FirebaseAuth.instance.currentUser!.phoneNumber}',
+                                      'email': '${FirebaseAuth.instance.currentUser!.email}',
+                                    }
+                                  };
+                                  _razorpay.open(options);
+                                },
                                 child: Text(
                                   "CHECKOUT",
                                   style: GoogleFonts.poppins(
@@ -312,6 +351,7 @@ class _CartScreenState extends State<CartScreen> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
+    _razorpay.clear(); // Removes all listeners
     Fluttertoast.cancel();
   }
 }

@@ -17,7 +17,6 @@ import 'package:fierbase/View/userorseller.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_navigation/src/routes/default_transitions.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:sizer/sizer.dart';
 import 'Controller/conmanagerbinding.dart';
@@ -37,52 +36,52 @@ void main() async {
   {
     runApp(
       Sizer(
-        builder: (context, orientation, devicetype) => GetMaterialApp(
-          theme: ThemeData(
-            pageTransitionsTheme: const PageTransitionsTheme(
-              builders: {
-                TargetPlatform.android: NoTransitionsBuilder(),
-                TargetPlatform.iOS: NoTransitionsBuilder(),
+        builder: (context, orientation, devicetype) =>
+            GetMaterialApp(
+              theme: ThemeData(
+                pageTransitionsTheme: const PageTransitionsTheme(
+                  builders: {
+                    TargetPlatform.android: NoTransitionsBuilder(),
+                    TargetPlatform.iOS: NoTransitionsBuilder(),
+                  },
+                ),
+              ),
+              initialBinding: ControllerBinding(),
+              debugShowCheckedModeBanner: false,
+              routes: {
+                '/': (context) => spelshScreen(),
+                'homeScreen': (context) => homeScreen(),
+                'addpro': (context) => addproduct(),
+                'login': (context) => loginscreen(),
+                'signup': (context) => signupscreen(),
+                'intro': (context) => interoScreen(),
+                'seller': (context) => Seller(),
+                'uprofile': (context) => userprofile(),
+                'search': (context) => SearchPage(),
+                'pagehomescreen': (context) => pagehome(),
+                'edit': (context) => editproduct(),
+                'editupdatepage': (context) => editupdate(),
+                'adminaccountpage': (context) => Adminaccountpage(),
+                'userorseller': (context) => Userorseller(),
+                'userhome': (context) => Userhome(),
+                'cartscreen': (context) => CartScreen(),
+                'favScreen': (context) => favScreen(),
               },
             ),
-          ),
-          initialBinding: ControllerBinding(),
-          debugShowCheckedModeBanner: false,
-          routes: {
-            '/': (context) => spelshScreen(),
-            'homeScreen': (context) => homeScreen(),
-            'addpro': (context) => addproduct(),
-            'login': (context) => loginscreen(),
-            'signup': (context) => signupscreen(),
-            'intro': (context) => interoScreen(),
-            'seller': (context) => Seller(),
-            'uprofile': (context) => userprofile(),
-            'search': (context) => SearchPage(),
-            'pagehomescreen': (context) => pagehome(),
-            'edit': (context) => editproduct(),
-            'editupdatepage': (context) => editupdate(),
-            'adminaccountpage': (context) => Adminaccountpage(),
-            'userorseller': (context) => Userorseller(),
-            'userhome': (context) => Userhome(),
-            'cartscreen': (context) => CartScreen(),
-            'favScreen': (context) => favScreen(),
-          },
-        ),
       ),
     );
   }
 }
+
 class NoTransitionsBuilder extends PageTransitionsBuilder {
   const NoTransitionsBuilder();
 
   @override
-  Widget buildTransitions<T>(
-      PageRoute<T>? route,
+  Widget buildTransitions<T>(PageRoute<T>? route,
       BuildContext? context,
       Animation<double> animation,
       Animation<double> secondaryAnimation,
-      Widget? child,
-      ) {
+      Widget? child,) {
     // only return the child without warping it with animations
     return child!;
   }
